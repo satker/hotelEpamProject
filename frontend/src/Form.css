@@ -28,3 +28,7 @@ input[type="submit"]{
     display:block;
     margin-top:1em;
 }
+
+.hint {
+	font-size: small;
+}

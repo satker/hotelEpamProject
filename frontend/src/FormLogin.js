@@ -10,6 +10,8 @@ class FormLogin extends Component {
 	    <label for="password">Password</label>
         <input type="password" id="password" name="password" />
         <input type="submit" value="Login" />
+		<br/>
+		<a href="" class="hint">Do not have account?</a>
       </form>
     );
   }

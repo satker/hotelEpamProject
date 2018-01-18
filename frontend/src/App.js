@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import FormRegister from './FormRegister';
+import Form from './FormLogin';
 
 class App extends Component {
   render() {
@@ -10,7 +10,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">EPAM Grand Hotel</h1>
         </header>
-		<FormRegister />
+		<Form />
       </div>
     );
   }
