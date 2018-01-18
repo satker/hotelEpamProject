@@ -16,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull
     private String login;
@@ -29,7 +29,11 @@ public class User {
     private String password;
     @NotNull
     private boolean is_admin = false;
+
     @OneToMany(mappedBy = "user")
     private Set<RoomRequest> requests = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<RoomConfirm> confirmRooms = new HashSet<>();
 
 }

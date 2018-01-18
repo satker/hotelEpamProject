@@ -13,17 +13,20 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoomType {
+public class RoomConfirm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotNull
-    private String name;
-    private String description;
 
-    @OneToMany(mappedBy = "roomType")
-    private Set<RoomRequest> requests = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @OneToMany(mappedBy = "roomType")
-    private Set<Room> rooms = new HashSet<>();
+    @OneToOne
+    @JoinColumn(name = "room_request_id")
+    private RoomRequest request;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room roomType;
 }

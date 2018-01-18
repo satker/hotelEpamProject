@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,17 +14,24 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoomType {
+public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @NotNull
-    private String name;
-    private String description;
+    private Integer number;
 
-    @OneToMany(mappedBy = "roomType")
-    private Set<RoomRequest> requests = new HashSet<>();
+    @NotNull
+    private String numberPlace;
 
-    @OneToMany(mappedBy = "roomType")
-    private Set<Room> rooms = new HashSet<>();
+    @NotNull
+    private String costNight;
+
+    @ManyToOne
+    @JoinColumn(name = "room_type_id")
+    private RoomType roomType;
+
+    @OneToMany(mappedBy = "room")
+    private Set<RoomConfirm> confirmRooms = new HashSet<>();
 }

@@ -15,7 +15,7 @@ import java.sql.Date;
 @NoArgsConstructor
 public class RoomRequest {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull
     @Min(1)
@@ -25,10 +25,15 @@ public class RoomRequest {
     @NotNull
     private Date departureDate;
     private boolean is_done = false;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     @ManyToOne
     @JoinColumn(name = "room_type_id")
     private RoomType roomType;
+
+    @OneToOne(mappedBy = "roomRequest")
+    private Set<RoomConfirm> confirmRooms = new HashSet<>();
 }
