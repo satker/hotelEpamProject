@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -34,6 +36,6 @@ public class RoomRequest {
     @JoinColumn(name = "room_type_id")
     private RoomType roomType;
 
-    @OneToOne(mappedBy = "roomRequest")
+    @OneToMany(mappedBy = "request")
     private Set<RoomConfirm> confirmRooms = new HashSet<>();
 }

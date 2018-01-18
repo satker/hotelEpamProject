@@ -28,5 +28,5 @@ public class RoomConfirm {
 
     @ManyToOne
     @JoinColumn(name = "room_id")
-    private Room roomType;
+    private Room room;
 }
