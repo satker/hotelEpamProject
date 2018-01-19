@@ -28,7 +28,7 @@ public class User {
     @Min(6)
     private String password;
     @NotNull
-    private boolean is_admin = false;
+    private boolean isAdmin = false;
 
     @OneToMany(mappedBy = "user")
     private Set<RoomRequest> requests = new HashSet<>();

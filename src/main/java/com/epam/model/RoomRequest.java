@@ -26,7 +26,7 @@ public class RoomRequest {
     private Date arrivalDate;
     @NotNull
     private Date departureDate;
-    private boolean is_done = false;
+    private boolean isDone = false;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

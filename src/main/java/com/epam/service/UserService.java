@@ -2,27 +2,25 @@ package com.epam.service;
 
 import com.epam.model.User;
 import com.epam.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-@Service("userService")
+@Service
+@RequiredArgsConstructor
 public class UserService {
 
 
     private final UserRepository userRepository;
 
-    @Autowired
-    UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public void deleteAllUsers() {
         userRepository.deleteAll();
     }
 
-    public void deleteUserById(Long id) {
+    public void deleteUserById(long id) {
         userRepository.delete(id);
     }
 
@@ -38,7 +36,7 @@ public class UserService {
         else return true;
     }
 
-    public User findUserByLogin(String login) {
+    public Optional<User> findUserByLogin(String login) {
         return userRepository.findByLogin(login);
     }
 
