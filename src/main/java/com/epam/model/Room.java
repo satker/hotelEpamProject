@@ -32,6 +32,6 @@ public class Room {
     @JoinColumn(name = "room_type_id")
     private RoomType roomType;
 
-    @OneToMany (mappedBy = "room")
+    @OneToMany(mappedBy = "room")
     private Set<RoomConfirm> confirmRooms = new HashSet<>();
 }

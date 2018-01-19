@@ -1,7 +1,7 @@
 package com.epam.repository;
 
 import com.epam.model.RoomType;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RoomTypeRepository extends CrudRepository<RoomType,Long> {
+public interface RoomTypeRepository extends JpaRepository<RoomType,Long> {
 }

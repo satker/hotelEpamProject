@@ -1,7 +1,7 @@
 package com.epam.repository;
 
 import com.epam.model.RoomRequest;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RoomRequestRepository extends CrudRepository<RoomRequest,Long> {
+public interface RoomRequestRepository extends JpaRepository<RoomRequest,Long> {
 }

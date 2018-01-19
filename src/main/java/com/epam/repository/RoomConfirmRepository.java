@@ -1,7 +1,7 @@
 package com.epam.repository;
 
 import com.epam.model.RoomConfirm;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RoomConfirmRepository extends CrudRepository<RoomConfirm,Long> {
+public interface RoomConfirmRepository extends JpaRepository<RoomConfirm,Long> {
 }
