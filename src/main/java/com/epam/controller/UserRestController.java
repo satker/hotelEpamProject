@@ -26,6 +26,7 @@ class UserRestController {
             responseEntity = new ResponseEntity(new CustomErrorType("Unable to create. A User with name " +
                     input.getLogin() + " already exist."), HttpStatus.CONFLICT);
         } else {
+            userService.saveUser(input);
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setLocation(ServletUriComponentsBuilder
                     .fromCurrentRequest().path("/{id}")
