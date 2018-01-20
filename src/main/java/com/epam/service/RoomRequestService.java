@@ -19,7 +19,7 @@ public class RoomRequestService {
         return roomRequestMapper.requestDTOToRequest(roomRequest).getId();
     }
 
-    public List<RoomRequestDTO> findOneByAccountUsername(long id) {
+    public List<RoomRequestDTO> findByAccountUsername(long id) {
         return roomRequestRepository.
                 findByUserId(id).
                 stream().
@@ -30,11 +30,11 @@ public class RoomRequestService {
         return roomRequestMapper.requestToRequestDTO(roomRequestRepository.findOne(id));
     }
 
-    public void saveUserRequest(RoomRequestDTO request) {
+    public void save(RoomRequestDTO request) {
         roomRequestRepository.save(roomRequestRepository.findOne(getId(request)));
     }
 
-    public void deleteUserRequest(RoomRequestDTO request) {
+    public void deleteRoomRequestById(RoomRequestDTO request) {
         roomRequestRepository.delete(roomRequestRepository.findOne(getId(request)));
     }
 }
