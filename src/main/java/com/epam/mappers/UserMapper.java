@@ -3,8 +3,6 @@ package com.epam.mappers;
 import com.epam.dto.UserDTO;
 import com.epam.model.User;
 import org.mapstruct.Mapper;
-
-
 import java.util.List;
 
 @Mapper(componentModel = "spring")

@@ -2,7 +2,6 @@ package com.epam.mappers;
 
 import com.epam.dto.RoomTypeDTO;
 import com.epam.model.RoomType;
-
 import java.util.List;
 
 public interface RoomTypeMapper {

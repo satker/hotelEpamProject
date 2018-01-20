@@ -2,13 +2,10 @@ package com.epam.controller;
 
 import com.epam.dto.UserDTO;
 import com.epam.service.UserService;
-import com.epam.util.CustomErrorType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
@@ -20,20 +17,13 @@ class UserRestController {
     private final UserService userService;
 
     @PostMapping
-    ResponseEntity<?> add(@RequestBody UserDTO input) {
-        ResponseEntity responseEntity;
+    long add(@RequestBody UserDTO input) {
         if (userService.isUserExists(input)) {
-            responseEntity = new ResponseEntity(new CustomErrorType("Unable to create. A User with name " +
-                    input.getLogin() + " already exist."), HttpStatus.CONFLICT);
+            return 0;
         } else {
             userService.saveUser(input);
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setLocation(ServletUriComponentsBuilder
-                    .fromCurrentRequest().path("/{id}")
-                    .buildAndExpand(userService.getId(input)).toUri());
-            responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
         }
-        return responseEntity;
+        return userService.getId(input);
     }
 
     @GetMapping
@@ -48,21 +38,25 @@ class UserRestController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable("id") long id, @RequestBody UserDTO user) {
-        return new ResponseEntity<UserDTO>(userService.updateUser(user, id), HttpStatus.OK);
+        return ResponseEntity.ok(userService.updateUser(user, id));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> deleteUser(@PathVariable("id") long id) {
+    public ResponseEntity deleteUser(@PathVariable("id") long id) {
         userService.deleteUserById(id);
-        return new ResponseEntity<UserDTO>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping
-    public ResponseEntity<UserDTO> deleteAllUsers() {
+    public void deleteAllUsers() {
         userService.deleteAllUsers();
-        return new ResponseEntity<UserDTO>(HttpStatus.NO_CONTENT);
     }
+}
 
-
+@ResponseStatus(HttpStatus.NOT_FOUND)
+class UserNotFoundException extends RuntimeException {
+    public UserNotFoundException(long userId) {
+        super("could not find user '" + userId + "'.");
+    }
 }
 

@@ -6,7 +6,6 @@ import com.epam.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import com.epam.mappers.UserMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +36,6 @@ public class UserService {
         user.setLogin(modifiedUser.getLogin());
         user.setPassword(modifiedUser.getPassword());
         return userMapper.userToUserDto(userRepository.save(user));
-
     }
 
     public boolean isUserExists(UserDTO user) {
@@ -52,7 +50,6 @@ public class UserService {
     public Optional<User> findUserById(long id) {
         return userRepository.findById(id);
     }
-
 
     public UserDTO findOne(Long id) {
         return userMapper.userToUserDto(userRepository.findOne(id));

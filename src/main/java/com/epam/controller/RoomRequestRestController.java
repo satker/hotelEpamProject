@@ -22,21 +22,15 @@ class RoomRequestRestController {
 
     private final UserService userService;
 
-
     @PostMapping
-    ResponseEntity<?> add(@PathVariable long userId, @RequestBody RoomRequestDTO input) {
+    ResponseEntity add(@PathVariable long userId, @RequestBody RoomRequestDTO input) {
         this.validateUser(userId);
         return this.userService
                 .findUserById(userId)
                 .map(account -> {
                     roomRequestService.save(input);
-                    HttpHeaders httpHeaders = new HttpHeaders();
-                    httpHeaders.setLocation(ServletUriComponentsBuilder
-                            .fromCurrentRequest().path("/{id}")
-                            .buildAndExpand(roomRequestService.getId(input)).toUri());
-                    return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
+                    return new ResponseEntity(null, HttpStatus.CREATED);
                 }).get();
-
     }
 
     @GetMapping(value = "/{orderId}")
@@ -54,7 +48,7 @@ class RoomRequestRestController {
     @DeleteMapping(value = "/{orderId}")
     public ResponseEntity<RoomRequestDTO> deleteOrder(@PathVariable("orderId") long id) {
         roomRequestService.deleteRoomRequestById(id);
-        return new ResponseEntity<RoomRequestDTO>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     private void validateUser(long userId) {
@@ -65,7 +59,6 @@ class RoomRequestRestController {
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 class RoomRequestNotFoundException extends RuntimeException {
-
     public RoomRequestNotFoundException(long userId) {
         super("could not find user '" + userId + "'.");
     }
