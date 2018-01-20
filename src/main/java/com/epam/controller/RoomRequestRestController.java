@@ -1,7 +1,6 @@
 package com.epam.controller;
 
 import com.epam.dto.RoomRequestDTO;
-import com.epam.dto.UserDTO;
 import com.epam.service.RoomRequestService;
 import com.epam.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +21,7 @@ class RoomRequestRestController {
 
     private final UserService userService;
 
+
     @PostMapping
     ResponseEntity<?> add(@PathVariable long userId, @RequestBody RoomRequestDTO input) {
         this.validateUser(userId);
@@ -29,20 +29,23 @@ class RoomRequestRestController {
                 .findUserById(userId)
                 .map(account -> {
                     roomRequestService.save(input);
-                    return new ResponseEntity<RoomRequestDTO>(null, new HttpHeaders().setLocation(ServletUriComponentsBuilder
+                    HttpHeaders httpHeaders = new HttpHeaders();
+                    httpHeaders.setLocation(ServletUriComponentsBuilder
                             .fromCurrentRequest().path("/{id}")
-                            .buildAndExpand(roomRequestService.getId(input)).toUri().toUri());,HttpStatus.CREATED);
+                            .buildAndExpand(roomRequestService.getId(input)).toUri());
+                    return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
                 }).get();
+
     }
 
     @GetMapping(value = "/{orderId}")
-    RoomRequestDTO readRoomRequest(@PathVariable long userId, @PathVariable Long requestId) {
+    ResponseEntity<RoomRequestDTO> readRoomRequest(@PathVariable long userId, @PathVariable long orderId) {
         this.validateUser(userId);
-        return ResponseEntity.ok(roomRequestService.findOne(requestId));
+        return ResponseEntity.ok(roomRequestService.findOne(orderId));
     }
 
     @GetMapping
-    Collection<RoomRequestDTO> readRoomRequests(@PathVariable long userId) {
+    ResponseEntity<Collection<RoomRequestDTO>> readRoomRequests(@PathVariable long userId) {
         this.validateUser(userId);
         return ResponseEntity.ok(roomRequestService.findByAccountUsername(userId));
     }
@@ -53,17 +56,16 @@ class RoomRequestRestController {
         return new ResponseEntity<RoomRequestDTO>(HttpStatus.NO_CONTENT);
     }
 
-
     private void validateUser(long userId) {
         this.userService.findUserById(userId).orElseThrow(
-                () -> new UserNotFoundException(userId));
+                () -> new RoomRequestNotFoundException(userId));
     }
 }
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-class UserNotFoundException extends RuntimeException {
+class RoomRequestNotFoundException extends RuntimeException {
 
-    public UserNotFoundException(long userId) {
+    public RoomRequestNotFoundException(long userId) {
         super("could not find user '" + userId + "'.");
     }
 }

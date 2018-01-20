@@ -34,7 +34,7 @@ public class RoomRequestService {
         roomRequestRepository.save(roomRequestRepository.findOne(getId(request)));
     }
 
-    public void deleteRoomRequestById(RoomRequestDTO request) {
-        roomRequestRepository.delete(roomRequestRepository.findOne(getId(request)));
+    public void deleteRoomRequestById(long id) {
+        roomRequestRepository.delete(roomRequestRepository.findOne(id));
     }
 }

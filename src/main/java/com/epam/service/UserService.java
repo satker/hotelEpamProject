@@ -41,7 +41,7 @@ public class UserService {
     }
 
     public boolean isUserExists(UserDTO user) {
-        return !(userRepository.findByLogin(user.getLogin()).isPresent());
+        return userRepository.findByLogin(user.getLogin()).isPresent();
 
     }
 
@@ -63,6 +63,6 @@ public class UserService {
     }
 
     public void saveUser(UserDTO user) {
-        userRepository.save(userRepository.findByLogin(user.getLogin()).get());
+        userRepository.save(userMapper.userDtoToUser(user));
     }
 }

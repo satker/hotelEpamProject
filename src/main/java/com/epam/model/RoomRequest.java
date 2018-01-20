@@ -18,7 +18,7 @@ import java.util.Set;
 public class RoomRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @NotNull
     @Min(1)
     private byte capacity;

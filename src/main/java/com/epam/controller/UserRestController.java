@@ -61,7 +61,6 @@ class UserRestController {
     public ResponseEntity<UserDTO> deleteAllUsers() {
         userService.deleteAllUsers();
         return new ResponseEntity<UserDTO>(HttpStatus.NO_CONTENT);
-
     }
 
 

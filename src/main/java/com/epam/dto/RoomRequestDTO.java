@@ -8,6 +8,6 @@ import java.sql.Date;
 public class RoomRequestDTO {
     private byte capacity;
     private Date arrivalDate;
-    private Date departure;
+    private Date departureDate;
     private boolean idDone;
 }
