@@ -3,6 +3,8 @@ package com.epam.mappers;
 import com.epam.dto.RoomRequestDTO;
 import com.epam.model.RoomRequest;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 import java.util.List;
 
