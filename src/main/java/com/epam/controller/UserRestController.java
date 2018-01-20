@@ -19,7 +19,7 @@ class UserRestController {
 
     private final UserService userService;
 
-    @PostMapping()
+    @PostMapping
     ResponseEntity<?> add(@RequestBody UserDTO input) {
         ResponseEntity responseEntity;
         if (userService.isUserExists(input)) {
@@ -37,43 +37,29 @@ class UserRestController {
 
     }
 
-    @GetMapping()
+    @GetMapping
     ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> users = userService.findAllUsers();
-        ResponseEntity responseEntity;
-        if (users.isEmpty()) {
-            responseEntity = new ResponseEntity(HttpStatus.NO_CONTENT);
-        } else {
-            responseEntity = new ResponseEntity<List<UserDTO>>(users, HttpStatus.OK);
-        }
-        return responseEntity;
+        return ResponseEntity.ok(userService.findAllUsers());
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") long id) {
-        UserDTO user = userService.fineOne(id);
-        ResponseEntity responseEntity;
-        responseEntity = new ResponseEntity<UserDTO>(user, HttpStatus.OK);
-        return responseEntity;
+        return ResponseEntity.ok(userService.fineOne(id));
     }
 
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable("id") long id, @RequestBody UserDTO user) {
-        ResponseEntity responseEntity;
-        responseEntity = new ResponseEntity<UserDTO>(userService.updateUser(user, id), HttpStatus.OK);
-        return responseEntity;
+    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") long id, @RequestBody UserDTO user) {
+        return new ResponseEntity<UserDTO>(userService.updateUser(user, id), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") long id) {
+    public ResponseEntity<UserDTO> deleteUser(@PathVariable("id") long id) {
         ResponseEntity responseEntity;
-        userService.deleteUserById(id);
-        responseEntity = new ResponseEntity<UserDTO>(HttpStatus.NO_CONTENT);
-        return responseEntity;
+        return new ResponseEntity<UserDTO>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping()
+    @DeleteMapping
     public ResponseEntity<UserDTO> deleteAllUsers() {
         userService.deleteAllUsers();
         return new ResponseEntity<UserDTO>(HttpStatus.NO_CONTENT);
