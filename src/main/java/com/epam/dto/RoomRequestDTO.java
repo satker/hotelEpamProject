@@ -1,5 +1,6 @@
 package com.epam.dto;
 
+import com.epam.model.RoomType;
 import lombok.Data;
 
 import java.sql.Date;
@@ -10,4 +11,5 @@ public class RoomRequestDTO {
     private Date arrivalDate;
     private Date departureDate;
     private boolean idDone;
+    private RoomTypeDTO roomType;
 }

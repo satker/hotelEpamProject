@@ -1,5 +1,6 @@
 package com.epam.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class Room {
     @JoinColumn(name = "room_type_id")
     private RoomType roomType;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "room")
     private Set<RoomConfirm> confirmRooms = new HashSet<>();
 }

@@ -1,6 +1,7 @@
 package com.epam.controller;
 
 import com.epam.dto.RoomRequestDTO;
+import com.epam.model.RoomRequest;
 import com.epam.service.RoomRequestService;
 import com.epam.service.UserService;
 import lombok.RequiredArgsConstructor;

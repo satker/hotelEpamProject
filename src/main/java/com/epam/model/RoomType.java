@@ -1,5 +1,6 @@
 package com.epam.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,9 +22,11 @@ public class RoomType {
     private String name;
     private String description;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "roomType")
     private Set<RoomRequest> requests = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "roomType")
     private Set<Room> rooms = new HashSet<>();
 }
