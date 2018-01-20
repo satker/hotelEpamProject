@@ -4,6 +4,15 @@ import com.epam.dto.RoomRequestDTO;
 import com.epam.model.RoomRequest;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
-public class RoomRequestMapper {
+public interface RoomRequestMapper {
+    RoomRequestDTO requestToRequestDTO(RoomRequest request);
+
+    List<RoomRequestDTO> requestToRequestDTO(List<RoomRequest> requests);
+
+    RoomRequest request(RoomRequestDTO requestDTO);
+
+    List<RoomRequest> requestDTOs(List<RoomRequestDTO> requestDTO);
 }

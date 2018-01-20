@@ -43,7 +43,7 @@ class UserRestController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") long id) {
-        return ResponseEntity.ok(userService.fineOne(id));
+        return ResponseEntity.ok(userService.findOne(id));
     }
 
     @PutMapping(value = "/{id}")
