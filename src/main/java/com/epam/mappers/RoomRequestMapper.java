@@ -12,7 +12,7 @@ public interface RoomRequestMapper {
 
     List<RoomRequestDTO> requestToRequestDTO(List<RoomRequest> requests);
 
-    RoomRequest request(RoomRequestDTO requestDTO);
+    RoomRequest requestDTOToRequest(RoomRequestDTO requestDTO);
 
-    List<RoomRequest> requestDTOs(List<RoomRequestDTO> requestDTO);
+    List<RoomRequest> requestDTOsToRequests(List<RoomRequestDTO> requestDTO);
 }
