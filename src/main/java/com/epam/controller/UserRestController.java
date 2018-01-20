@@ -34,7 +34,6 @@ class UserRestController {
             responseEntity = new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
         }
         return responseEntity;
-
     }
 
     @GetMapping
@@ -44,9 +43,8 @@ class UserRestController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") long id) {
-        return ResponseEntity.ok(userService.fineOne(id));
+        return ResponseEntity.ok(userService.findOne(id));
     }
-
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable("id") long id, @RequestBody UserDTO user) {
@@ -55,7 +53,7 @@ class UserRestController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<UserDTO> deleteUser(@PathVariable("id") long id) {
-        ResponseEntity responseEntity;
+        userService.deleteUserById(id);
         return new ResponseEntity<UserDTO>(HttpStatus.NO_CONTENT);
     }
 

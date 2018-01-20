@@ -13,6 +13,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
@@ -48,7 +49,12 @@ public class UserService {
         return userRepository.findByLogin(login);
     }
 
-    public UserDTO fineOne(Long id) {
+    public Optional<User> findUserById(long id) {
+        return userRepository.findById(id);
+    }
+
+
+    public UserDTO findOne(Long id) {
         return userMapper.userToUserDto(userRepository.findOne(id));
     }
 
