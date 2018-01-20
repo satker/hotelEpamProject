@@ -1,6 +1,7 @@
 package com.epam.controller;
 
 import com.epam.dto.RoomRequestDTO;
+import com.epam.dto.UserDTO;
 import com.epam.service.RoomRequestService;
 import com.epam.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +29,9 @@ class RoomRequestRestController {
                 .findUserById(userId)
                 .map(account -> {
                     roomRequestService.save(input);
-                    HttpHeaders httpHeaders = new HttpHeaders();
-                    httpHeaders.setLocation(ServletUriComponentsBuilder
+                    return new ResponseEntity<RoomRequestDTO>(null, new HttpHeaders().setLocation(ServletUriComponentsBuilder
                             .fromCurrentRequest().path("/{id}")
-                            .buildAndExpand(roomRequestService.getId(input)).toUri().toUri());
-                    return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
+                            .buildAndExpand(roomRequestService.getId(input)).toUri().toUri());,HttpStatus.CREATED);
                 }).get();
     }
 
@@ -46,6 +45,12 @@ class RoomRequestRestController {
     Collection<RoomRequestDTO> readRoomRequests(@PathVariable long userId) {
         this.validateUser(userId);
         return ResponseEntity.ok(roomRequestService.findByAccountUsername(userId));
+    }
+
+    @DeleteMapping(value = "/{orderId}")
+    public ResponseEntity<RoomRequestDTO> deleteOrder(@PathVariable("orderId") long id) {
+        roomRequestService.deleteRoomRequestById(id);
+        return new ResponseEntity<RoomRequestDTO>(HttpStatus.NO_CONTENT);
     }
 
 
