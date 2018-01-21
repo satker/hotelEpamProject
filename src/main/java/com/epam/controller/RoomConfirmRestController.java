@@ -16,6 +16,7 @@ import java.util.Collection;
 public class RoomConfirmRestController {
     private final RoomConfirmService roomConfirmService;
     private final UserService userService;
+
     @PostMapping
     ResponseEntity add(@PathVariable long userId, @RequestBody RoomConfirmDTO input) {
         this.validateUser(userId);
@@ -33,8 +34,15 @@ public class RoomConfirmRestController {
         return ResponseEntity.ok(roomConfirmService.findByAccountUsername(userId));
     }
 
+    @GetMapping(value = "/{confirmsId}")
+    ResponseEntity<RoomConfirmDTO> readRoomRequest(@PathVariable long userId, @PathVariable long confirmsId) {
+        this.validateUser(userId);
+        return ResponseEntity.ok(roomConfirmService.findOne(confirmsId));
+    }
+
     private void validateUser(long userId) {
         this.userService.findUserById(userId).orElseThrow(
                 () -> new RoomRequestNotFoundException(userId));
     }
+
 }

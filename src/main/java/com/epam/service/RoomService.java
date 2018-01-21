@@ -21,4 +21,12 @@ public class RoomService {
                 stream().
                 map(roomMapper::roomToRoomDTO).collect(Collectors.toList());
     }
+
+    public void saveRoom(RoomDTO user) {
+        roomRepository.save(roomMapper.roomDTOToRoom(user));
+    }
+
+    public RoomDTO findOne(long id) {
+        return roomMapper.roomToRoomDTO(roomRepository.findOne(id));
+    }
 }
