@@ -55,7 +55,7 @@ class RoomRequestRestController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     private class RoomRequestNotFoundException extends RuntimeException {
-        public RoomRequestNotFoundException(long userId) {
+        RoomRequestNotFoundException(long userId) {
             super("could not find user '" + userId + "'.");
         }
     }

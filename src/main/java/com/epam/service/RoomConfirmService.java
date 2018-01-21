@@ -24,8 +24,7 @@ public class RoomConfirmService {
     }
 
     public void save(RoomConfirmDTO confirmDTO) {
-        RoomConfirm roomRequest = roomConfirmMapper.confirmDTOToConfirm(confirmDTO);
-        roomConfirmRepository.save(roomRequest);
+        roomConfirmRepository.save(roomConfirmMapper.confirmDTOToConfirm(confirmDTO));
     }
     public RoomConfirmDTO findOne(long id) {
         return roomConfirmMapper.confirmToConfirmDTO(roomConfirmRepository.findOne(id));

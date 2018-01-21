@@ -32,8 +32,7 @@ public class RoomRequestService {
     }
 
     public void save(RoomRequestDTO request) {
-        RoomRequest roomRequest = roomRequestMapper.requestDTOToRequest(request);
-        roomRequestRepository.save(roomRequest);
+        roomRequestRepository.save(roomRequestMapper.requestDTOToRequest(request));
     }
 
     public void deleteRoomRequestById(long id) {
