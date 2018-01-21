@@ -23,7 +23,7 @@ public class RoomRestController {
     @GetMapping(value = "/{roomsId}")
     ResponseEntity<RoomDTO> readRoom(@PathVariable long appartmentsId, @PathVariable long roomsId) {
         validateRoom(roomsId);
-        return ResponseEntity.ok(roomService.findOne(appartmentsId));
+        return ResponseEntity.ok(roomService.findOne(roomsId));
     }
 
     @DeleteMapping(value = "/{roomsId}")
