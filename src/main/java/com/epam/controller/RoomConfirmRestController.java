@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 @RestController
 @RequestMapping("users/{userId}/confirms")
 @RequiredArgsConstructor
@@ -24,6 +26,13 @@ public class RoomConfirmRestController {
                     return new ResponseEntity(null, HttpStatus.CREATED);
                 }).get();
     }
+
+    @GetMapping
+    ResponseEntity<Collection<RoomConfirmDTO>> readRoomConfirms(@PathVariable long userId) {
+        this.validateUser(userId);
+        return ResponseEntity.ok(roomConfirmService.findByAccountUsername(userId));
+    }
+
     private void validateUser(long userId) {
         this.userService.findUserById(userId).orElseThrow(
                 () -> new RoomRequestNotFoundException(userId));
