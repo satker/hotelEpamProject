@@ -51,12 +51,12 @@ class UserRestController {
     public void deleteAllUsers() {
         userService.deleteAllUsers();
     }
-}
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-class UserNotFoundException extends RuntimeException {
-    public UserNotFoundException(long userId) {
-        super("could not find user '" + userId + "'.");
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    private class UserNotFoundException extends RuntimeException {
+        public UserNotFoundException(long userId) {
+            super("could not find user '" + userId + "'.");
+        }
     }
 }
 

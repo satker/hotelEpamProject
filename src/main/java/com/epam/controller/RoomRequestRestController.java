@@ -1,15 +1,12 @@
 package com.epam.controller;
 
 import com.epam.dto.RoomRequestDTO;
-import com.epam.model.RoomRequest;
 import com.epam.service.RoomRequestService;
 import com.epam.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Collection;
 
@@ -55,11 +52,12 @@ class RoomRequestRestController {
         this.userService.findUserById(userId).orElseThrow(
                 () -> new RoomRequestNotFoundException(userId));
     }
-}
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-class RoomRequestNotFoundException extends RuntimeException {
-    public RoomRequestNotFoundException(long userId) {
-        super("could not find user '" + userId + "'.");
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    private class RoomRequestNotFoundException extends RuntimeException {
+        public RoomRequestNotFoundException(long userId) {
+            super("could not find user '" + userId + "'.");
+        }
     }
+
 }

@@ -42,7 +42,13 @@ public class RoomRestController {
 
     private void validateUser(long userId) {
         this.userService.findUserById(userId).orElseThrow(
-                () -> new RoomRequestNotFoundException(userId));
+                () -> new RoomNotFoundException(userId));
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    private class RoomNotFoundException extends RuntimeException {
+        public RoomNotFoundException(long userId) {
+            super("could not find user '" + userId + "'.");
+        }
+    }
 }
