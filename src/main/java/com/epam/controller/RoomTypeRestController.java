@@ -22,18 +22,30 @@ public class RoomTypeRestController {
 
     @GetMapping(value = "/{appartmentsId}")
     ResponseEntity<RoomTypeDTO> findTypeById(@PathVariable long appartmentsId) {
+        validateRoomType(appartmentsId);
         return ResponseEntity.ok(roomTypeService.findOne(appartmentsId));
     }
 
     @DeleteMapping(value = "/{appartmentsId}")
-    public ResponseEntity deleteType(@PathVariable long appartmentsId) {
+    public void deleteType(@PathVariable long appartmentsId) {
+        validateRoomType(appartmentsId);
         roomTypeService.deleteRoomTypeById(appartmentsId);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping
-    ResponseEntity addType(@RequestBody RoomTypeDTO input) {
+    void addType(@RequestBody RoomTypeDTO input) {
         roomTypeService.save(input);
-        return new ResponseEntity(null, HttpStatus.CREATED);
+    }
+
+    private void validateRoomType(long roomTypeId) {
+        this.roomTypeService.findRoomTypeById(roomTypeId).orElseThrow(
+                () -> new RoomTypeRestController.RoomTypeNotFoundException(roomTypeId));
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    private class RoomTypeNotFoundException extends RuntimeException {
+        public RoomTypeNotFoundException(long roomTypeId) {
+            super("could not find roomType '" + roomTypeId + "'.");
+        }
     }
 }
