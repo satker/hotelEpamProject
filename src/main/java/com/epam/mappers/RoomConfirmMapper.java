@@ -8,11 +8,11 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface RoomConfirmMapper {
-    RoomConfirmDTO requestToRequestDTO(RoomConfirm request);
+    RoomConfirmDTO confirmToConfirmDTO(RoomConfirm confirm);
 
-    List<RoomConfirmDTO> requestToRequestDTO(List<RoomConfirm> requests);
+    List<RoomConfirmDTO> confirmsToConfirmDTOs(List<RoomConfirm> confirms);
 
-    RoomConfirm requestDTOToRequest(RoomConfirmDTO requestDTO);
+    RoomConfirm confirmDTOToConfirm(RoomConfirmDTO confirmDTO);
 
-    List<RoomConfirm> requestDTOsToRequests(List<RoomConfirmDTO> requestDTO);
+    List<RoomConfirm> confirmDTOsToConfirm(List<RoomConfirmDTO> confirmDTO);
 }
