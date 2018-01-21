@@ -43,7 +43,7 @@ class RoomRequestRestController {
     }
 
     @DeleteMapping(value = "/{orderId}")
-    public ResponseEntity<RoomRequestDTO> deleteOrder(@PathVariable("orderId") long id) {
+    public ResponseEntity deleteOrder(@PathVariable("orderId") long id) {
         roomRequestService.deleteRoomRequestById(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -59,5 +59,4 @@ class RoomRequestRestController {
             super("could not find user '" + userId + "'.");
         }
     }
-
 }

@@ -26,7 +26,7 @@ public class RoomTypeRestController {
     }
 
     @DeleteMapping(value = "/{appartmentsId}")
-    public ResponseEntity<RoomTypeDTO> deleteType(@PathVariable long appartmentsId) {
+    public ResponseEntity deleteType(@PathVariable long appartmentsId) {
         roomTypeService.deleteRoomTypeById(appartmentsId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

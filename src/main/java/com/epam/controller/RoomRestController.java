@@ -26,7 +26,7 @@ public class RoomRestController {
     }
 
     @DeleteMapping(value = "/{roomsId}")
-    public ResponseEntity<RoomDTO> deleteRoom(@PathVariable long roomsId) {
+    public ResponseEntity deleteRoom(@PathVariable long roomsId) {
         roomService.deleteRoomById(roomsId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -35,5 +35,12 @@ public class RoomRestController {
     ResponseEntity addRoom(@PathVariable long userId, @RequestBody RoomDTO input, @PathVariable long appartmentsId) {
         roomService.save(input);
         return new ResponseEntity(null, HttpStatus.CREATED);
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    private class RoomNotFoundException extends RuntimeException {
+        RoomNotFoundException(long userId) {
+            super("could not find room with id = " + userId + "'.");
+        }
     }
 }
