@@ -4,6 +4,7 @@ import com.epam.dto.AddUserDTO;
 import com.epam.dto.UserDTO;
 import com.epam.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

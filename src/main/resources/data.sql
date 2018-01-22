@@ -1,5 +1,5 @@
-INSERT INTO `hotel_epam`.`user` (`first_name`, `role`, `last_name`, `login`, `password`) VALUES ('aleksey','ADMIN', 'slovyagin', 'aleksey', '12345678');
-INSERT INTO `hotel_epam`.`user` (`first_name`, `role`, `last_name`, `login`, `password`) VALUES ('artem','USER', 'kunatz', 'arteem', '12345678');
+INSERT INTO `hotel_epam`.`user` (`first_name`, `role`, `last_name`, `login`, `password`) VALUES ('aleksey','ROLE_ADMIN', 'slovyagin', 'aleksey', '$2a$10$N0eqNiuikWCy9ETQ1rdau.XEELcyEO7kukkfoiNISk/9F7gw6eB0W');
+INSERT INTO `hotel_epam`.`user` (`first_name`, `role`, `last_name`, `login`, `password`) VALUES ('artem','ROLE_USER', 'kunatz', 'arteem', '$2a$10$N0eqNiuikWCy9ETQ1rdau.XEELcyEO7kukkfoiNISk/9F7gw6eB0W');
 
 INSERT INTO `hotel_epam`.`room_type` (`description`, `name`) VALUES ('big room', 'luxe');
 INSERT INTO `hotel_epam`.`room_type` (`description`, `name`) VALUES ('small room', 'ord');

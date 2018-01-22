@@ -3,6 +3,7 @@ package com.epam.controller;
 import com.epam.dto.RoomTypeDTO;
 import com.epam.service.RoomTypeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
