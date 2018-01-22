@@ -8,6 +8,6 @@ public class RoomDTO {
     private Integer number;
     private String numberPlace;
     private String costNight;
-    private RoomType roomType;
+    private RoomTypeDTO roomType;
 }
 

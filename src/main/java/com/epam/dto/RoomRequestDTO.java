@@ -11,6 +11,6 @@ public class RoomRequestDTO {
     private Date arrivalDate;
     private Date departureDate;
     private boolean idDone;
-    private RoomType roomType;
+    private RoomTypeDTO roomType;
 }
 

@@ -7,8 +7,8 @@ import lombok.Data;
 
 @Data
 public class RoomConfirmDTO {
-    private User user;
-    private RoomRequest request;
-    private Room room;
+    private UserDTO user;
+    private RoomRequestDTO request;
+    private RoomDTO room;
 }
 
