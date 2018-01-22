@@ -45,4 +45,3 @@ public class RoomTypeService {
         return roomTypeRepository.findById(id);
     }
 }
-

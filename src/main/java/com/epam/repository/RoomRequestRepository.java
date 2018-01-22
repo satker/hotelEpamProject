@@ -9,4 +9,3 @@ import java.util.Optional;
 public interface RoomRequestRepository extends JpaRepository<RoomRequest, Long> {
     Collection<RoomRequest> findByUserId(long id);
 }
-

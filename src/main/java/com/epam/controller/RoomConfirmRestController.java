@@ -37,6 +37,3 @@ public class RoomConfirmRestController {
         return roomConfirmService.findOne(userId);
     }
 }
-
-
-

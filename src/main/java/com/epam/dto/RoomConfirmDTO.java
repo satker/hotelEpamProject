@@ -11,4 +11,3 @@ public class RoomConfirmDTO {
     private RoomRequest request;
     private Room room;
 }
-

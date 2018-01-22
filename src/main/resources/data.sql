@@ -8,4 +8,3 @@ INSERT INTO `hotel_epam`.`room` (`cost_night`, `number`, `number_place`, `room_t
 INSERT INTO `hotel_epam`.`room` (`cost_night`, `number`, `number_place`, `room_type_id`) VALUES ('2000', '2', '3', '2');
 
 INSERT INTO `hotel_epam`.`room_request` (`arrival_date`, `capacity`, `departure_date`, `is_done`, `room_type_id`, `user_id`) VALUES ('2008-07-23', '2', '2008-07-23', b'1', '2', '2');
-

@@ -9,6 +9,3 @@ public class AddUserDTO {
     private String lastName;
     private String password;
 }
-
-
-
