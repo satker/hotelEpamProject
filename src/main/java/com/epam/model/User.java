@@ -29,13 +29,4 @@ public class User {
     private String password;
     @NotNull
     private boolean isAdmin = false;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private Set<RoomRequest> requests = new HashSet<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private Set<RoomConfirm> confirmRooms = new HashSet<>();
-
 }

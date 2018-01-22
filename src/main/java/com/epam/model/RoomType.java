@@ -21,11 +21,4 @@ public class RoomType {
     private String name;
     private String description;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "roomType")
-    private Set<RoomRequest> requests = new HashSet<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "roomType")
-    private Set<Room> rooms = new HashSet<>();
 }

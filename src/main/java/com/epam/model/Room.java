@@ -30,8 +30,4 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "room_type_id")
     private RoomType roomType;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "room")
-    private Set<RoomConfirm> confirmRooms = new HashSet<>();
 }

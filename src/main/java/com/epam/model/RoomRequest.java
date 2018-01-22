@@ -36,7 +36,4 @@ public class RoomRequest {
     @JoinColumn(name = "room_type_id")
     private RoomType roomType;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "request")
-    private Set<RoomConfirm> confirmRooms = new HashSet<>();
 }
