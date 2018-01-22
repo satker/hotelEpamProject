@@ -1,6 +1,7 @@
 package com.epam.service;
 
 import com.epam.dto.RoomTypeDTO;
+import com.epam.exceptions.RoomTypeNotFoundException;
 import com.epam.mappers.RoomTypeMapper;
 import com.epam.model.RoomType;
 import com.epam.model.User;
@@ -34,7 +35,7 @@ public class RoomTypeService {
     }
 
     public RoomTypeDTO findOne(long id) {
-        return roomTypeMapper.typeToTypeDTO(roomTypeRepository.findOne(id));
+        return roomTypeMapper.typeToTypeDTO(roomTypeRepository.findById(id).orElseThrow(() -> new RoomTypeNotFoundException(id)));
     }
 
     public void save(RoomTypeDTO request) {

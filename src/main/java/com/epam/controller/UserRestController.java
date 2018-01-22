@@ -16,13 +16,8 @@ class UserRestController {
     private final UserService userService;
 
     @PostMapping
-    long add(@RequestBody AddUserDTO input) {
-        if (userService.isUserExists(input)) {
-            return 0;
-        } else {
-            userService.saveUser(input);
-        }
-        return 1;
+    UserDTO add(@RequestBody AddUserDTO input) {
+        return userService.saveUser(input);
     }
 
     @GetMapping

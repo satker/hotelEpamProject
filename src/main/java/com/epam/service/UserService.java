@@ -4,6 +4,7 @@ import com.epam.dto.AddUserDTO;
 import com.epam.dto.UserDTO;
 import com.epam.model.User;
 import com.epam.repository.UserRepository;
+import com.epam.exceptions.*;
 import lombok.RequiredArgsConstructor;
 import com.epam.mappers.UserMapper;
 import org.springframework.stereotype.Service;
@@ -35,8 +36,8 @@ public class UserService {
         return userMapper.userToUserDto(userRepository.save(user));
     }
 
-    public boolean isUserExists(AddUserDTO user) {
-        return userRepository.findByLogin(user.getLogin()).isPresent();
+    public Optional<User> isUserExists(AddUserDTO user) {
+        return userRepository.findByLogin(user.getLogin());
     }
 
     public Optional<User> findUserByLogin(String login) {
@@ -48,14 +49,14 @@ public class UserService {
     }
 
     public UserDTO findOne(Long id) {
-        return userMapper.userToUserDto(userRepository.findOne(id));
+        return userMapper.userToUserDto(userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id)));
     }
 
     public List<UserDTO> findAllUsers() {
         return userMapper.usersToUsersDto(userRepository.findAll());
     }
 
-    public void saveUser(AddUserDTO user) {
-        userRepository.save(userMapper.addUserDtoToUser(user));
+    public UserDTO saveUser(AddUserDTO user) {
+        return userMapper.userToUserDto(userRepository.save(userMapper.addUserDtoToUser(user)));
     }
 }
