@@ -28,5 +28,6 @@ public class User {
     @Min(6)
     private String password;
     @NotNull
-    private boolean isAdmin = false;
+    private String role = "USER";
 }
+

@@ -38,3 +38,4 @@ public class RoomRequestService {
         roomRequestRepository.delete(roomRequestRepository.findOne(id));
     }
 }
+

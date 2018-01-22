@@ -30,3 +30,4 @@ public class RoomConfirmService {
         return roomConfirmMapper.confirmToConfirmDTO(roomConfirmRepository.findOne(id));
     }
 }
+

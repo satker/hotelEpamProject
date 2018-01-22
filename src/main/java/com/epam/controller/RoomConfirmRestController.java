@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("users/{userId}/confirms")
@@ -19,7 +19,6 @@ public class RoomConfirmRestController {
 
     @PostMapping
     ResponseEntity add(@PathVariable long userId, @RequestBody RoomConfirmDTO input) {
-        this.validateUser(userId);
         return this.userService
                 .findUserById(userId)
                 .map(account -> {
@@ -29,27 +28,15 @@ public class RoomConfirmRestController {
     }
 
     @GetMapping
-    ResponseEntity<Collection<RoomConfirmDTO>> readRoomConfirms(@PathVariable long userId) {
-        this.validateUser(userId);
-        return ResponseEntity.ok(roomConfirmService.findByAccountUsername(userId));
+    List<RoomConfirmDTO> readRoomConfirms(@PathVariable long userId) {
+        return roomConfirmService.findByAccountUsername(userId);
     }
 
     @GetMapping(value = "/{confirmsId}")
-    ResponseEntity<RoomConfirmDTO> readRoomRequest(@PathVariable long userId, @PathVariable long confirmsId) {
-        this.validateUser(userId);
-        return ResponseEntity.ok(roomConfirmService.findOne(userId));
+    RoomConfirmDTO readRoomRequest(@PathVariable long userId) {
+        return roomConfirmService.findOne(userId);
     }
-
-    private void validateUser(long userId) {
-        this.userService.findUserById(userId).orElseThrow(
-                () -> new RoomConfirmNotFoundException(userId));
-    }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    private class RoomConfirmNotFoundException extends RuntimeException {
-        RoomConfirmNotFoundException(long userId) {
-            super("could not find user '" + userId + "'.");
-        }
-    }
-
 }
+
+
+

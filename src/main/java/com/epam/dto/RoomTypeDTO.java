@@ -7,3 +7,4 @@ public class RoomTypeDTO {
     private String name;
     private String description;
 }
+

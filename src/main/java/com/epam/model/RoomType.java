@@ -20,5 +20,5 @@ public class RoomType {
     @NotNull
     private String name;
     private String description;
-
 }
+

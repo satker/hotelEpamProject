@@ -10,3 +10,4 @@ public class RoomDTO {
     private String costNight;
     private RoomType roomType;
 }
+

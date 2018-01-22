@@ -35,5 +35,5 @@ public class RoomRequest {
     @ManyToOne
     @JoinColumn(name = "room_type_id")
     private RoomType roomType;
-
 }
+
