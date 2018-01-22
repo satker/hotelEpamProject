@@ -2,7 +2,6 @@ package com.epam.service;
 
 import com.epam.dto.RoomRequestDTO;
 import com.epam.mappers.RoomRequestMapper;
-import com.epam.model.RoomRequest;
 import com.epam.repository.RoomRequestRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

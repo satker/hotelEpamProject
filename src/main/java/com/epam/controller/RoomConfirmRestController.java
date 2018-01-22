@@ -37,7 +37,7 @@ public class RoomConfirmRestController {
     @GetMapping(value = "/{confirmsId}")
     ResponseEntity<RoomConfirmDTO> readRoomRequest(@PathVariable long userId, @PathVariable long confirmsId) {
         this.validateUser(userId);
-        return ResponseEntity.ok(roomConfirmService.findOne(confirmsId));
+        return ResponseEntity.ok(roomConfirmService.findOne(userId));
     }
 
     private void validateUser(long userId) {

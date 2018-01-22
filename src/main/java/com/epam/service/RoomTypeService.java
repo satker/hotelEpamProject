@@ -2,11 +2,14 @@ package com.epam.service;
 
 import com.epam.dto.RoomTypeDTO;
 import com.epam.mappers.RoomTypeMapper;
+import com.epam.model.RoomType;
+import com.epam.model.User;
 import com.epam.repository.RoomTypeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,5 +39,9 @@ public class RoomTypeService {
 
     public void save(RoomTypeDTO request) {
         roomTypeRepository.save(roomTypeMapper.typeDTOToType(request));
+    }
+
+    public Optional<RoomType> findRoomTypeById(long id) {
+        return roomTypeRepository.findById(id);
     }
 }

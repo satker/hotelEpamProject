@@ -21,26 +21,31 @@ public class RoomRestController {
     }
 
     @GetMapping(value = "/{roomsId}")
-    ResponseEntity<RoomDTO> readRoom(@PathVariable long roomsId) {
+    ResponseEntity<RoomDTO> readRoom(@PathVariable long appartmentsId, @PathVariable long roomsId) {
+        validateRoom(roomsId);
         return ResponseEntity.ok(roomService.findOne(roomsId));
     }
 
     @DeleteMapping(value = "/{roomsId}")
-    public ResponseEntity deleteRoom(@PathVariable long roomsId) {
+    public void deleteRoom(@PathVariable long roomsId) {
+        validateRoom(roomsId);
         roomService.deleteRoomById(roomsId);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping
-    ResponseEntity addRoom(@PathVariable long userId, @RequestBody RoomDTO input, @PathVariable long appartmentsId) {
+    public void addRoom(@PathVariable long userId, @RequestBody RoomDTO input, @PathVariable long appartmentsId) {
         roomService.save(input);
-        return new ResponseEntity(null, HttpStatus.CREATED);
+    }
+
+    private void validateRoom(long roomId) {
+        this.roomService.findRoomById(roomId).orElseThrow(
+                () -> new RoomRestController.RoomNotFoundException(roomId));
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     private class RoomNotFoundException extends RuntimeException {
-        RoomNotFoundException(long userId) {
-            super("could not find room with id = " + userId + "'.");
+        RoomNotFoundException(long roomId) {
+            super("could not find room with id = " + roomId + "'.");
         }
     }
 }

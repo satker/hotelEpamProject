@@ -32,24 +32,31 @@ class UserRestController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getUser(@PathVariable("id") long id) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable("id") long id) {
+        validateUser(id);
         return ResponseEntity.ok(userService.findOne(id));
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable("id") long id, @RequestBody UserDTO user) {
+        validateUser(id);
         return ResponseEntity.ok(userService.updateUser(user, id));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity deleteUser(@PathVariable("id") long id) {
+    public void deleteUser(@PathVariable("id") long id) {
+        validateUser(id);
         userService.deleteUserById(id);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping
     public void deleteAllUsers() {
         userService.deleteAllUsers();
+    }
+
+    private void validateUser(long userId) {
+        this.userService.findUserById(userId).orElseThrow(
+                () -> new UserRestController.UserNotFoundException(userId));
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
