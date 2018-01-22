@@ -13,4 +13,3 @@ public class RoomRequestDTO {
     private boolean idDone;
     private RoomTypeDTO roomType;
 }
-

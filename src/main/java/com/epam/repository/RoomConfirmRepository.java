@@ -8,4 +8,3 @@ import java.util.Collection;
 public interface RoomConfirmRepository extends JpaRepository<RoomConfirm, Long> {
     Collection<RoomConfirm> findByUserId(long id);
 }
-

@@ -50,6 +50,3 @@ class UserRestController {
         userService.deleteAllUsers();
     }
 }
-
-
-

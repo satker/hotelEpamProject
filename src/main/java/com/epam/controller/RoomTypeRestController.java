@@ -33,5 +33,3 @@ public class RoomTypeRestController {
         roomTypeService.save(input);
     }
 }
-
-
