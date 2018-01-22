@@ -1,0 +1,18 @@
+package com.epam.mappers;
+
+import com.epam.dto.RoomTypeDTO;
+import com.epam.model.RoomType;
+import org.mapstruct.Mapper;
+
+import java.util.List;
+
+@Mapper(componentModel = "spring")
+public interface RoomTypeMapper {
+    RoomTypeDTO typeToTypeDTO(RoomType type);
+
+    List<RoomTypeDTO> typesToTypesDTO(List<RoomType> types);
+
+    RoomType typeDTOToType(RoomTypeDTO type);
+
+    List<RoomType> typeDTOsToTypes(List<RoomTypeDTO> types);
+}
