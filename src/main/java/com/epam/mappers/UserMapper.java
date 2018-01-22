@@ -7,16 +7,12 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface UserMapper {
-    UserDTO userToUserDto(User user);
+public abstract class UserMapper {
+    public abstract UserDTO userToUserDto(User user);
 
-    AddUserDTO userToAddUserDto(User user);
+    public abstract List<UserDTO> usersToUsersDto(List<User> users);
 
-    List<UserDTO> usersToUsersDto(List<User> users);
+    public abstract User userDtoToUser(UserDTO user);
 
-    User userDtoToUser(UserDTO user);
-
-    User addUserDtoToUser(AddUserDTO user);
-
-    List<User> usersDtoToUsers(List<UserDTO> users);
+    public abstract User addUserDtoToUser(AddUserDTO user);
 }

@@ -3,15 +3,26 @@ package com.epam.mappers;
 import com.epam.dto.RoomRequestDTO;
 import com.epam.model.RoomRequest;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface RoomRequestMapper {
-    RoomRequestDTO requestToRequestDTO(RoomRequest request);
+public abstract class RoomRequestMapper {
+    @Autowired
+    RoomTypeMapper roomTypeMapper;
 
-    List<RoomRequestDTO> requestToRequestDTO(List<RoomRequest> requests);
+    @Mappings({
+            @Mapping(target = "roomType",
+                    expression = "java(roomTypeMapper.typeToTypeDTO(request.getRoomType()))")
+    })
+    public abstract RoomRequestDTO requestToRequestDTO(RoomRequest request);
 
-    RoomRequest requestDTOToRequest(RoomRequestDTO requestDTO);
-
-    List<RoomRequest> requestDTOsToRequests(List<RoomRequestDTO> requestDTO);
+    @Mappings({
+            @Mapping(target = "roomType",
+                    expression = "java(roomTypeMapper.typeDTOToType(requestDTO.getRoomType()))")
+    })
+    public abstract RoomRequest requestDTOToRequest(RoomRequestDTO requestDTO);
 }
