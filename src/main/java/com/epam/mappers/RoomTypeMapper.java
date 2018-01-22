@@ -9,10 +9,5 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public abstract class RoomTypeMapper {
     public abstract RoomTypeDTO typeToTypeDTO(RoomType type);
-
-    public abstract List<RoomTypeDTO> typesToTypesDTO(List<RoomType> types);
-
     public abstract RoomType typeDTOToType(RoomTypeDTO type);
-
-    public abstract List<RoomType> typeDTOsToTypes(List<RoomTypeDTO> types);
 }
