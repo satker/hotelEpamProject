@@ -2,16 +2,14 @@ package com.epam.controller;
 
 import com.epam.dto.AddUserDTO;
 import com.epam.dto.UserDTO;
-import com.epam.exceptions.UserNotFoundException;
 import com.epam.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 class UserRestController {
 
@@ -22,10 +20,6 @@ class UserRestController {
         return userService.saveUser(input);
     }
 
-    @GetMapping
-    List<UserDTO> getAllUsers() {
-        return userService.findAllUsers();
-    }
 
     @GetMapping(value = "/{id}")
     public UserDTO getUser(@PathVariable("id") long id) {
@@ -36,15 +30,4 @@ class UserRestController {
     public UserDTO updateUser(@PathVariable("id") long id, @RequestBody UserDTO user) {
         return userService.updateUser(user, id);
     }
-
-    @DeleteMapping(value = "/{id}")
-    public void deleteUser(@PathVariable("id") long id) {
-        userService.deleteUserById(id);
-    }
-
-    @DeleteMapping
-    public void deleteAllUsers() {
-        userService.deleteAllUsers();
-    }
-
 }

@@ -11,21 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("users/{userId}/confirms")
+@RequestMapping("user/{userId}/confirms")
 @RequiredArgsConstructor
 public class RoomConfirmRestController {
     private final RoomConfirmService roomConfirmService;
     private final UserService userService;
-
-    @PostMapping
-    ResponseEntity add(@PathVariable long userId, @RequestBody RoomConfirmDTO input) {
-        return this.userService
-                .findUserById(userId)
-                .map(account -> {
-                    roomConfirmService.save(input);
-                    return new ResponseEntity(null, HttpStatus.CREATED);
-                }).get();
-    }
 
     @GetMapping
     List<RoomConfirmDTO> readRoomConfirms(@PathVariable long userId) {
