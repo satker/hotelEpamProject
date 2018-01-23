@@ -1,11 +1,13 @@
 package com.epam.service;
 
+import com.epam.dto.AddUserDTO;
 import com.epam.dto.UserDTO;
 import com.epam.model.User;
 import com.epam.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import com.epam.mappers.UserMapper;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,11 +17,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-
-    public long getId(UserDTO userDTO) {
-        Optional<User> user = userRepository.findByLogin(userDTO.getLogin());
-        return user.get().getId();
-    }
 
     public void deleteAllUsers() {
         userRepository.deleteAll();
@@ -38,9 +35,8 @@ public class UserService {
         return userMapper.userToUserDto(userRepository.save(user));
     }
 
-    public boolean isUserExists(UserDTO user) {
+    public boolean isUserExists(AddUserDTO user) {
         return userRepository.findByLogin(user.getLogin()).isPresent();
-
     }
 
     public Optional<User> findUserByLogin(String login) {
@@ -59,7 +55,7 @@ public class UserService {
         return userMapper.usersToUsersDto(userRepository.findAll());
     }
 
-    public void saveUser(UserDTO user) {
-        userRepository.save(userMapper.userDtoToUser(user));
+    public void saveUser(AddUserDTO user) {
+        userRepository.save(userMapper.addUserDtoToUser(user));
     }
 }

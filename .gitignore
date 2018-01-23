@@ -14,7 +14,11 @@ target/
 *.iws
 *.iml
 *.ipr
-
+*.DS_Store
+.DS_Store
+DS_Store
+..DS_Store
+*..DS_Store
 ### NetBeans ###
 nbproject/private/
 build/
@@ -22,6 +26,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+<<<<<<< HEAD
 
 ### Frontend ###
 frontend/node_modules
@@ -37,3 +42,5 @@ frontend/.env.production.local
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
+=======
+>>>>>>> 5820a8a58d1e7ca4aca91a1d9ad8886b7f6284c5

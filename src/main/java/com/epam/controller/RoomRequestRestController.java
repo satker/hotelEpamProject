@@ -8,10 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 
 @RestController
-@RequestMapping("users/{userId}/orders")
+@RequestMapping("user/{userId}/orders")
 @RequiredArgsConstructor
 class RoomRequestRestController {
 
@@ -21,7 +21,6 @@ class RoomRequestRestController {
 
     @PostMapping
     ResponseEntity add(@PathVariable long userId, @RequestBody RoomRequestDTO input) {
-        this.validateUser(userId);
         return this.userService
                 .findUserById(userId)
                 .map(account -> {
@@ -31,32 +30,17 @@ class RoomRequestRestController {
     }
 
     @GetMapping(value = "/{orderId}")
-    ResponseEntity<RoomRequestDTO> readRoomRequest(@PathVariable long userId, @PathVariable long orderId) {
-        this.validateUser(userId);
-        return ResponseEntity.ok(roomRequestService.findOne(orderId));
+    RoomRequestDTO readRoomRequest(@PathVariable long userId, @PathVariable long orderId) {
+        return roomRequestService.findOne(orderId);
     }
 
     @GetMapping
-    ResponseEntity<Collection<RoomRequestDTO>> readRoomRequests(@PathVariable long userId) {
-        this.validateUser(userId);
-        return ResponseEntity.ok(roomRequestService.findByAccountUsername(userId));
+    List<RoomRequestDTO> readRoomRequests(@PathVariable long userId) {
+        return roomRequestService.findByAccountUsername(userId);
     }
 
     @DeleteMapping(value = "/{orderId}")
-    public ResponseEntity deleteOrder(@PathVariable("orderId") long id) {
+    public void deleteOrder(@PathVariable("orderId") long id) {
         roomRequestService.deleteRoomRequestById(id);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
-    }
-
-    private void validateUser(long userId) {
-        this.userService.findUserById(userId).orElseThrow(
-                () -> new RoomRequestNotFoundException(userId));
-    }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    private class RoomRequestNotFoundException extends RuntimeException {
-        RoomRequestNotFoundException(long userId) {
-            super("could not find user '" + userId + "'.");
-        }
     }
 }

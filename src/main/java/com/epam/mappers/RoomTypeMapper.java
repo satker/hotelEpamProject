@@ -7,12 +7,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface RoomTypeMapper {
-    RoomTypeDTO typeToTypeDTO(RoomType type);
-
-    List<RoomTypeDTO> typesToTypesDTO(List<RoomType> types);
-
-    RoomType typeDTOToType(RoomTypeDTO type);
-
-    List<RoomType> typeDTOsToTypes(List<RoomTypeDTO> types);
+public abstract class RoomTypeMapper {
+    public abstract RoomTypeDTO typeToTypeDTO(RoomType type);
+    public abstract RoomType typeDTOToType(RoomTypeDTO type);
 }

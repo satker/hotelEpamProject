@@ -8,6 +8,5 @@ import java.util.Optional;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
     Collection<Room> findByRoomTypeId(long id);
-
     Optional<Room> findById(long id);
 }
