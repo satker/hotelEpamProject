@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 class UserRestController {
 
@@ -25,10 +25,6 @@ class UserRestController {
         return 1;
     }
 
-    @GetMapping
-    List<UserDTO> getAllUsers() {
-        return userService.findAllUsers();
-    }
 
     @GetMapping(value = "/{id}")
     public UserDTO getUser(@PathVariable("id") long id) {
@@ -38,15 +34,5 @@ class UserRestController {
     @PutMapping(value = "/{id}")
     public UserDTO updateUser(@PathVariable("id") long id, @RequestBody UserDTO user) {
         return userService.updateUser(user, id);
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public void deleteUser(@PathVariable("id") long id) {
-        userService.deleteUserById(id);
-    }
-
-    @DeleteMapping
-    public void deleteAllUsers() {
-        userService.deleteAllUsers();
     }
 }
