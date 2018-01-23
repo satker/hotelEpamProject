@@ -7,6 +7,7 @@ import com.epam.repository.UserRepository;
 import com.epam.exceptions.*;
 import lombok.RequiredArgsConstructor;
 import com.epam.mappers.UserMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,7 +60,10 @@ public class UserService {
     }
 
     public UserDTO saveUser(AddUserDTO user) {
-        return userMapper.userToUserDto(userRepository.save(userMapper.addUserDtoToUser(user)));
+        User newUser = userMapper.addUserDtoToUser(user);
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        return userMapper.userToUserDto(userRepository.save(newUser));
     }
 
     public UserDTO getUserValidateUser(long id, HttpServletRequest request) {

@@ -75,8 +75,8 @@ public class AdminRestController {
     }
 
     @GetMapping(value = "/{idAdmin}/users/{id}/orders/{orderId}")
-    RoomRequestDTO readRoomRequest(@PathVariable("id") long userId, @PathVariable long orderId) {
-        return roomRequestService.findOne(orderId);
+    RoomRequestDTO readRoomRequest(@PathVariable long orderId, HttpServletRequest request) {
+        return roomRequestService.findOne(orderId, request);
     }
 
     @DeleteMapping(value = "/{idAdmin}/users/{id}/orders/{orderId}")

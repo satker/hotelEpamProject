@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -30,8 +31,8 @@ class RoomRequestRestController {
     }
 
     @GetMapping(value = "/{orderId}")
-    RoomRequestDTO readRoomRequest(@PathVariable long userId, @PathVariable long orderId) {
-        return roomRequestService.findOne(orderId);
+    RoomRequestDTO findValidateRoom(@PathVariable long orderId, HttpServletRequest request) {
+        return roomRequestService.findValidateRoom(orderId,request);
     }
 
     @GetMapping
