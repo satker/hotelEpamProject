@@ -6,7 +6,7 @@ import com.epam.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/user")
@@ -22,12 +22,12 @@ class UserRestController {
 
 
     @GetMapping(value = "/{id}")
-    public UserDTO getUser(@PathVariable("id") long id) {
-        return userService.findOne(id);
+    public UserDTO getValidateUser(@PathVariable("id") long id, HttpServletRequest request) {
+        return userService.getUserValidateUser(id, request);
     }
 
     @PutMapping(value = "/{id}")
-    public UserDTO updateUser(@PathVariable("id") long id, @RequestBody UserDTO user) {
-        return userService.updateUser(user, id);
+    public void updateValidateUser(@PathVariable("id") long id, @RequestBody UserDTO user, HttpServletRequest request) {
+        userService.updateUserValidateUser(id, request, user);
     }
 }

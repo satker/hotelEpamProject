@@ -36,12 +36,6 @@ public class UserInfoController {
         return mav;
     }
 
-    @GetMapping(value = "/username")
-    @ResponseBody
-    public User currentUser(HttpServletRequest request) {
-        Principal principal = request.getUserPrincipal();
-        return userService.findUserByLogin(principal.getName());
-    }
 
     @GetMapping("error")
     public ModelAndView error() {
@@ -50,4 +44,3 @@ public class UserInfoController {
         return mav;
     }
 }
-

@@ -1,6 +1,7 @@
 package com.epam.service;
 
 import com.epam.dto.RoomRequestDTO;
+import com.epam.exceptions.RoomRequestNotFoundException;
 import com.epam.mappers.RoomRequestMapper;
 import com.epam.repository.RoomRequestRepository;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class RoomRequestService {
     }
 
     public RoomRequestDTO findOne(long id) {
-        return roomRequestMapper.requestToRequestDTO(roomRequestRepository.findOne(id));
+        return roomRequestMapper.requestToRequestDTO(roomRequestRepository.findById(id).orElseThrow(() -> new RoomRequestNotFoundException(id)));
     }
 
     public void save(RoomRequestDTO request) {

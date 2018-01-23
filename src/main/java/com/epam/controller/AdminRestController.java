@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -21,24 +22,19 @@ public class AdminRestController {
 
     ////For admin
     @GetMapping(value = "/{idAdmin}")
-    public UserDTO getAdmin(@PathVariable("idAdmin") long id) {
-        return userService.findOne(id);
+    public UserDTO getValidateAdmin(@PathVariable("idAdmin") long id, HttpServletRequest request) {
+        return userService.getUserValidateUser(id, request);
     }
 
     @PutMapping(value = "/{idAdmin}")
-    public UserDTO updateAdmin(@PathVariable("idAdmin") long id, @RequestBody UserDTO user) {
-        return userService.updateUser(user, id);
+    public void updateValidateAdmin(@PathVariable("idAdmin") long id, @RequestBody UserDTO user, HttpServletRequest request) {
+        userService.updateUserValidateUser(id, request, user);
     }
 
     //// For Users
     @GetMapping(value = "/{idAdmin}/users/{id}")
     public UserDTO getUser(@PathVariable("id") long id) {
         return userService.findOne(id);
-    }
-
-    @PutMapping(value = "/{idAdmin}/users/{id}")
-    public UserDTO updateUser(@PathVariable("id") long id, @RequestBody UserDTO user) {
-        return userService.updateUser(user, id);
     }
 
     @DeleteMapping(value = "/{idAdmin}/users/{id}")

@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import com.epam.mappers.UserMapper;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,8 +42,8 @@ public class UserService {
         return userRepository.findByLogin(user.getLogin());
     }
 
-    public User findUserByLogin(String login) throws UserNotFoundException {
-        return userRepository.findByLogin(login).orElseThrow(() -> new UserNotFoundException(0));
+    public UserDTO findUserByLogin(String login) throws UserNotFoundException {
+        return userMapper.userToUserDto(userRepository.findByLogin(login).orElseThrow(() -> new UserNotFoundException(0)));
     }
 
     public Optional<User> findUserById(long id) {
@@ -58,5 +60,19 @@ public class UserService {
 
     public UserDTO saveUser(AddUserDTO user) {
         return userMapper.userToUserDto(userRepository.save(userMapper.addUserDtoToUser(user)));
+    }
+
+    public UserDTO getUserValidateUser(long id, HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        if (findUserByLogin(principal.getName()).getId() == id) {
+            return findOne(id);
+        } else throw new AccessDeniedException(id);
+    }
+
+    public void updateUserValidateUser(long id, HttpServletRequest request, UserDTO upUser) {
+        Principal principal = request.getUserPrincipal();
+        if (findUserByLogin(principal.getName()).getId() == id) {
+            updateUser(upUser, id);
+        } else throw new AccessDeniedException(id);
     }
 }
