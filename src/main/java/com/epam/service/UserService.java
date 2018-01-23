@@ -40,8 +40,8 @@ public class UserService {
         return userRepository.findByLogin(user.getLogin());
     }
 
-    public Optional<User> findUserByLogin(String login) {
-        return userRepository.findByLogin(login);
+    public User findUserByLogin(String login) throws UserNotFoundException {
+        return userRepository.findByLogin(login).orElseThrow(() -> new UserNotFoundException(0));
     }
 
     public Optional<User> findUserById(long id) {

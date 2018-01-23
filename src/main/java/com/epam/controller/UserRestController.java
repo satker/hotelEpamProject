@@ -2,9 +2,10 @@ package com.epam.controller;
 
 import com.epam.dto.AddUserDTO;
 import com.epam.dto.UserDTO;
+import com.epam.exceptions.UserNotFoundException;
 import com.epam.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,4 +46,5 @@ class UserRestController {
     public void deleteAllUsers() {
         userService.deleteAllUsers();
     }
+
 }

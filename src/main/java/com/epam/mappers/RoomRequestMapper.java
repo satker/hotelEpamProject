@@ -7,8 +7,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
 @Mapper(componentModel = "spring")
 public abstract class RoomRequestMapper {
     @Autowired
