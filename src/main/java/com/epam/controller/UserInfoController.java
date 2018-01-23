@@ -1,6 +1,7 @@
 package com.epam.controller;
 
 
+import com.epam.dto.UserDTO;
 import com.epam.model.User;
 import com.epam.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,12 @@ public class UserInfoController {
         return mav;
     }
 
+    @GetMapping("username")
+    @ResponseBody
+    public UserDTO currentUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        return userService.findUserByLogin(principal.getName());
+    }
 
     @GetMapping("error")
     public ModelAndView error() {

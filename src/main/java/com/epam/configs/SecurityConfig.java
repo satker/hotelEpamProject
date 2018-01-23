@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -22,9 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/users").hasAnyRole("ADMIN", "USER")
+                .antMatchers().hasAnyRole("ADMIN")
                 .and().formLogin()  //login configuration
-                .loginPage("/login")
+                .loginPage("/login").failureUrl("/login?error=true")
                 .loginProcessingUrl("/app-login")
                 .usernameParameter("app_username")
                 .passwordParameter("app_password")
