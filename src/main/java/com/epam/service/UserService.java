@@ -7,13 +7,16 @@ import com.epam.repository.UserRepository;
 import com.epam.exceptions.*;
 import lombok.RequiredArgsConstructor;
 import com.epam.mappers.UserMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -59,22 +62,21 @@ public class UserService {
     }
 
     public UserDTO saveUser(AddUserDTO user) {
+        log.debug("user saved {}", user);
         User newUser = userMapper.addUserDtoToUser(user);
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userMapper.userToUserDto(userRepository.save(newUser));
     }
 
-    public UserDTO getUserValidateUser(long id, HttpServletRequest request) {
-        Principal principal = request.getUserPrincipal();
-        if (findUserByLogin(principal.getName()).getId() == id) {
+    public UserDTO getUserValidateUser(long id, String login) {
+        if (findUserByLogin(login).getId() == id) {
             return findOne(id);
         } else throw new AccessDeniedException(id);
     }
 
-    public void updateUserValidateUser(long id, HttpServletRequest request, UserDTO upUser) {
-        Principal principal = request.getUserPrincipal();
-        if (findUserByLogin(principal.getName()).getId() == id) {
+    public void updateUserValidateUser(long id, String login, UserDTO upUser) {
+        if (findUserByLogin(login).getId() == id) {
             updateUser(upUser, id);
         } else throw new AccessDeniedException(id);
     }

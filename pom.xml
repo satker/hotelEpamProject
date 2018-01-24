@@ -27,6 +27,9 @@
         <org.apache.maven.plugins.version>3.7.0</org.apache.maven.plugins.version>
         <org.bsc.maven.version>3.3.2</org.bsc.maven.version>
         <mysql.version>5.1.6</mysql.version>
+        <org.mockito.version>1.10.19</org.mockito.version>
+        <junit.version>4.12</junit.version>
+        <org.slf4j.version>1.7.25</org.slf4j.version>
     </properties>
 
     <dependencies>
@@ -47,10 +50,21 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
+            <version>${org.slf4j.version}</version>
         </dependency>
-
-
+        <!-- Dependency for JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <!--<scope>test</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${org.mockito.version}</version>
+            <!--<scope>test</scope>-->
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

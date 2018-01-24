@@ -31,9 +31,8 @@ public class RoomRequestService {
                 map(roomRequestMapper::requestToRequestDTO).collect(Collectors.toList());
     }
 
-    public RoomRequestDTO findValidateRoom(long id, HttpServletRequest request) {
-        Principal principal = request.getUserPrincipal();
-        long userId = userService.findUserByLogin(principal.getName()).getId();
+    public RoomRequestDTO findValidateRoom(long id, String login) {
+        long userId = userService.findUserByLogin(login).getId();
         if (findByAccountUsername(userId).contains(roomRequestMapper.requestToRequestDTO(roomRequestRepository.findById(id).get()))) {
             return roomRequestMapper.requestToRequestDTO(roomRequestRepository.findById(id).orElseThrow(() -> new RoomRequestNotFoundException(id)));
         } else throw new AccessDeniedException(userId);

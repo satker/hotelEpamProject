@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -22,13 +23,13 @@ public class AdminRestController {
 
     ////For admin
     @GetMapping(value = "/{idAdmin}")
-    public UserDTO getValidateAdmin(@PathVariable("idAdmin") long id, HttpServletRequest request) {
-        return userService.getUserValidateUser(id, request);
+    public UserDTO getValidateAdmin(@PathVariable("idAdmin") long id, Principal principal) {
+        return userService.getUserValidateUser(id, principal.getName());
     }
 
     @PutMapping(value = "/{idAdmin}")
-    public void updateValidateAdmin(@PathVariable("idAdmin") long id, @RequestBody UserDTO user, HttpServletRequest request) {
-        userService.updateUserValidateUser(id, request, user);
+    public void updateValidateAdmin(@PathVariable("idAdmin") long id, @RequestBody UserDTO user, Principal principal) {
+        userService.updateUserValidateUser(id, principal.getName(), user);
     }
 
     //// For Users
