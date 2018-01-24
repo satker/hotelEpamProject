@@ -2,6 +2,7 @@ package com.epam.service;
 
 import com.epam.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -14,12 +15,14 @@ import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MyAppUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        log.debug("user has been loaded by username {}", s);
         com.epam.model.User user = userRepository.findByLogin(s).get();
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
         UserDetails userDetails = (UserDetails) new User(user.getLogin(),

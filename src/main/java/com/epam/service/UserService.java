@@ -11,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +21,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void deleteAllUsers() {
         userRepository.deleteAll();
@@ -33,6 +32,7 @@ public class UserService {
     }
 
     public UserDTO updateUser(UserDTO modifiedUser, long id) {
+        log.debug("user updated {}", modifiedUser);
         User user = userRepository.findOne(id);
         user.setFirstName(modifiedUser.getFirstName());
         user.setLastName(modifiedUser.getLastName());
@@ -41,43 +41,50 @@ public class UserService {
         return userMapper.userToUserDto(userRepository.save(user));
     }
 
-    public Optional<User> isUserExists(AddUserDTO user) {
-        return userRepository.findByLogin(user.getLogin());
-    }
-
     public UserDTO findUserByLogin(String login) throws UserNotFoundException {
+        log.debug("user found by login {}", login);
         return userMapper.userToUserDto(userRepository.findByLogin(login).orElseThrow(() -> new UserNotFoundException(0)));
     }
 
     public Optional<User> findUserById(long id) {
+        log.debug("user found by id{}", id);
         return userRepository.findById(id);
     }
 
     public UserDTO findOne(Long id) {
+        log.debug("user found by id {}", id);
         return userMapper.userToUserDto(userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id)));
     }
 
     public List<UserDTO> findAllUsers() {
+        log.debug("all users found {}");
         return userMapper.usersToUsersDto(userRepository.findAll());
     }
 
     public UserDTO saveUser(AddUserDTO user) {
         log.debug("user saved {}", user);
         User newUser = userMapper.addUserDtoToUser(user);
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userMapper.userToUserDto(userRepository.save(newUser));
     }
 
     public UserDTO getUserValidateUser(long id, String login) {
+        log.debug("validated user got {}", id);
         if (findUserByLogin(login).getId() == id) {
             return findOne(id);
-        } else throw new AccessDeniedException(id);
+        } else {
+            log.error("Acces denied to id {}", id);
+            throw new AccessDeniedException(id);
+        }
     }
 
     public void updateUserValidateUser(long id, String login, UserDTO upUser) {
+        log.debug("validated user updated {}", id);
         if (findUserByLogin(login).getId() == id) {
             updateUser(upUser, id);
-        } else throw new AccessDeniedException(id);
+        } else {
+            log.error("Access denied to id {}", id);
+            throw new AccessDeniedException(id);
+        }
     }
 }
