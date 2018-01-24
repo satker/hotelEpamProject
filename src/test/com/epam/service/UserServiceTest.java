@@ -31,12 +31,6 @@ public class UserServiceTest {
     public void save() {
         doReturn(USER).when(mockUserMapper).addUserDtoToUser(ADD_USER_DTO);
         doReturn(USER).when(mockUserRepository).save(USER);
-        when(mockUserRepository.save(any(User.class)))
-                .thenAnswer((Answer<User>) invocation -> {
-                    User user1 = (User) invocation.getArguments()[0];
-                    user1.setId(1L);
-                    return user1;
-                });
         userService.saveUser(ADD_USER_DTO);
     }
 
@@ -46,12 +40,6 @@ public class UserServiceTest {
         doReturn(Optional.of(USER)).
                 when(mockUserRepository).
                 findById(any(Long.class));
-        when(mockUserRepository.findOne(any(Long.class)))
-                .thenAnswer((Answer<User>) invocation -> {
-                    User user1 = (User) invocation.getArguments()[0];
-                    user1.setId(1L);
-                    return user1;
-                });
         userService.findOne(1L);
     }
 
