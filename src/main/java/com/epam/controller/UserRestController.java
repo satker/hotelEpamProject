@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/user")
@@ -20,6 +21,11 @@ class UserRestController {
         return userService.saveUser(input);
     }
 
+    @GetMapping
+    public UserDTO getValidateUser(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        return userService.findUserByLogin(principal.getName());
+    }
 
     @GetMapping(value = "/{id}")
     public UserDTO getValidateUser(@PathVariable("id") long id, HttpServletRequest request) {

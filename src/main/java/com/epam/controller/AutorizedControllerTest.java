@@ -19,7 +19,7 @@ import java.security.Principal;
 @Controller
 @RequestMapping
 @RequiredArgsConstructor
-public class UserInfoController {
+public class AutorizedControllerTest {
     private final UserService userService;
 
     @GetMapping("login")
@@ -33,15 +33,7 @@ public class UserInfoController {
     public ModelAndView getAllUserArticles() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("logoutTEST");
-
         return mav;
-    }
-
-    @GetMapping("username")
-    @ResponseBody
-    public UserDTO currentUser(HttpServletRequest request) {
-        Principal principal = request.getUserPrincipal();
-        return userService.findUserByLogin(principal.getName());
     }
 
     @GetMapping("error")

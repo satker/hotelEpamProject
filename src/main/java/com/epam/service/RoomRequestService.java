@@ -43,6 +43,10 @@ public class RoomRequestService {
         roomRequestRepository.save(roomRequestMapper.requestDTOToRequest(request));
     }
 
+    public RoomRequestDTO findOne(long id) {
+        return roomRequestMapper.requestToRequestDTO(roomRequestRepository.findOne(id));
+    }
+
     public void deleteRoomRequestById(long id) {
         roomRequestRepository.delete(roomRequestRepository.findOne(id));
     }

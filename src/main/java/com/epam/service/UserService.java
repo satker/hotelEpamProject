@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import com.epam.mappers.UserMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
