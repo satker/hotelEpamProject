@@ -4,10 +4,13 @@ import com.epam.dto.AddUserDTO;
 import com.epam.dto.UserDTO;
 import com.epam.model.User;
 
+import java.util.Optional;
+
 class InitialVariables {
-    static final AddUserDTO ADD_USER_DTO;
-    static final UserDTO USER_DTO;
-    static final User USER;
+    static AddUserDTO ADD_USER_DTO;
+    static UserDTO USER_DTO;
+    static User USER;
+    static UserDTO MODIF_USER_DTO;
 
     static {
         ADD_USER_DTO = new AddUserDTO();
@@ -24,6 +27,14 @@ class InitialVariables {
         USER_DTO.setFirstName("Artem");
         USER_DTO.setId(1L);
 
+        MODIF_USER_DTO = new UserDTO();
+        MODIF_USER_DTO.setRole("ROLE_ADMIN");
+        MODIF_USER_DTO.setPassword("122221");
+        MODIF_USER_DTO.setLogin("den");
+        MODIF_USER_DTO.setLastName("PPPPPP");
+        MODIF_USER_DTO.setFirstName("Art");
+        MODIF_USER_DTO.setId(1L);
+
         USER = new User();
         USER.setFirstName("Artem");
         USER.setId(1L);
@@ -31,5 +42,6 @@ class InitialVariables {
         USER.setLogin("jakson____den");
         USER.setPassword("1111");
         USER.setRole("ROLE_USER");
+
     }
 }
