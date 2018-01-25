@@ -32,7 +32,6 @@
         <org.slf4j.version>1.7.25</org.slf4j.version>
         <io.github.benas.version>3.7.0</io.github.benas.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>io.github.benas</groupId>
@@ -104,6 +103,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>LATEST</version>
         </dependency>
     </dependencies>
 
