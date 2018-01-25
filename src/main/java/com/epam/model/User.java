@@ -26,4 +26,22 @@ public class User {
     private String password;
     @NotNull
     private String role = "USER";
+    @PrePersist
+    public void onPrePersist() {
+        audit("INSERT");
+    }
+
+    @PUpdate
+    public void onPreUpdate() {
+        audit("UPDATE");
+    }
+
+    @PreRemove
+    public void onPreRemove() {
+        audit("DELETE");
+    }
+
+    private void audit(String operation) {
+        setOperation(operation);
+    }
 }

@@ -37,7 +37,6 @@ public class RoomRequestService {
         if (findByAccountUsername(userId).contains(roomRequestMapper.requestToRequestDTO(roomRequestRepository.findById(id).get()))) {
             return roomRequestMapper.requestToRequestDTO(roomRequestRepository.findById(id).orElseThrow(() -> new RoomRequestNotFoundException(id)));
         } else {
-            log.error("Acces denied to id {}", id);
             throw new AccessDeniedException(userId);
         }
     }

@@ -33,13 +33,18 @@ public class UserServiceTest {
         AddUserDTO addUserDTO = InitialVariables.someAddUserDTO();
         doReturn(user).when(mockUserMapper).addUserDtoToUser(addUserDTO);
         doReturn(user).when(mockUserRepository).save(user);
-        userService.saveUser(addUserDTO);
+
+        UserDTO userDTO = userService.saveUser(addUserDTO);
+
+        //assertEquals(userDTO, )
+
     }
 
     @Test
     public void find() {
         User user = InitialVariables.someUser();
         UserDTO userDTO = InitialVariables.someUserDTO();
+        //when(mockUserMapper.Z)
         doReturn(userDTO).when(mockUserMapper).userToUserDto(user);
         doReturn(Optional.of(user)).
                 when(mockUserRepository).

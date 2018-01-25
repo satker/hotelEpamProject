@@ -73,7 +73,6 @@ public class UserService {
         if (findUserByLogin(login).getId() == id) {
             return findOne(id);
         } else {
-            log.error("Acces denied to id {}", id);
             throw new AccessDeniedException(id);
         }
     }
@@ -83,7 +82,6 @@ public class UserService {
         if (findUserByLogin(login).getId() == id) {
             updateUser(upUser, id);
         } else {
-            log.error("Access denied to id {}", id);
             throw new AccessDeniedException(id);
         }
     }

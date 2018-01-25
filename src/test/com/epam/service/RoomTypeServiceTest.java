@@ -14,13 +14,13 @@ import static org.mockito.Mockito.mock;
 
 public class RoomTypeServiceTest {
     private RoomTypeService roomTypeService;
+    @Mock
     private RoomTypeMapper mockRoomTypeMapper;
+    @Mock
     private RoomTypeRepository mockRoomTypeRepository;
 
     @Before
     public void setup() {
-        mockRoomTypeRepository = mock(RoomTypeRepository.class);
-        mockRoomTypeMapper = mock(RoomTypeMapper.class);
         roomTypeService = new RoomTypeService(mockRoomTypeRepository, mockRoomTypeMapper);
     }
 
