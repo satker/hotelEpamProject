@@ -30,9 +30,15 @@
         <org.mockito.version>1.10.19</org.mockito.version>
         <junit.version>4.12</junit.version>
         <org.slf4j.version>1.7.25</org.slf4j.version>
+        <io.github.benas.version>3.7.0</io.github.benas.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>io.github.benas</groupId>
+            <artifactId>random-beans</artifactId>
+            <version>${io.github.benas.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>

@@ -1,16 +1,16 @@
 package com.epam.service;
 
+import com.epam.dto.AddUserDTO;
+import com.epam.dto.UserDTO;
 import com.epam.mappers.UserMapper;
 import com.epam.model.User;
 import com.epam.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.stubbing.Answer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
-import static com.epam.service.InitialVariables.*;
 import static org.mockito.Mockito.*;
 
 public class UserServiceTest {
@@ -29,25 +29,30 @@ public class UserServiceTest {
 
     @Test
     public void save() {
-        doReturn(USER).when(mockUserMapper).addUserDtoToUser(ADD_USER_DTO);
-        doReturn(USER).when(mockUserRepository).save(USER);
-        userService.saveUser(ADD_USER_DTO);
+        User user = InitialVariables.someUser();
+        AddUserDTO addUserDTO = InitialVariables.someAddUserDTO();
+        doReturn(user).when(mockUserMapper).addUserDtoToUser(addUserDTO);
+        doReturn(user).when(mockUserRepository).save(user);
+        userService.saveUser(addUserDTO);
     }
 
     @Test
     public void find() {
-        doReturn(USER_DTO).when(mockUserMapper).userToUserDto(USER);
-        doReturn(Optional.of(USER)).
+        User user = InitialVariables.someUser();
+        UserDTO userDTO = InitialVariables.someUserDTO();
+        doReturn(userDTO).when(mockUserMapper).userToUserDto(user);
+        doReturn(Optional.of(user)).
                 when(mockUserRepository).
                 findById(any(Long.class));
-        userService.findOne(1L);
+        userService.findOne(user.getId());
     }
 
     @Test
-    public void update(){
-        doReturn(USER).when(mockUserRepository).findOne(any(Long.class));
-        doReturn(USER_DTO).when(mockUserMapper).userToUserDto(USER);
-        userService.updateUser(MODIF_USER_DTO, 1L);
+    public void update() {
+        User user = InitialVariables.someUser();
+        doReturn(user).when(mockUserRepository).findOne(any(Long.class));
+        doReturn(InitialVariables.someUserDTO()).when(mockUserMapper).userToUserDto(user);
+        userService.updateUser(InitialVariables.someUserDTO(), 1L);
 
     }
 }
