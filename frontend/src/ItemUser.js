@@ -2,8 +2,14 @@ import React, {Component} from 'react';
 
 class ItemUser extends Component {
     render() {
+        let user = this.props.user;
         return (
-            <li>{JSON.stringify(this.props.user)}</li>
+            <tr>
+                <td>{user.login}</td>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
+                <td>{user.role}</td>
+            </tr>
         );
     }
 }

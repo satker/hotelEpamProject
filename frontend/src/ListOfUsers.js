@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Table} from 'reactstrap';
 import ItemUser from './ItemUser';
 
 const URL = "http://localhost:8080/admin/0/users";
@@ -23,10 +24,20 @@ class ListOfUsers extends Component {
         }
 
         return (
-            <ul>
+            <Table hover>
+                <thead>
+                <tr>
+                    <th>Login</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Role</th>
+                </tr>
+                </thead>
+                <tbody>
                 {this.state.list.map(user =>
                     <ItemUser key={user.id} user={user}/>)}
-            </ul>
+                </tbody>
+            </Table>
         );
     }
 

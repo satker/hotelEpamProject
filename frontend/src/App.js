@@ -6,7 +6,7 @@ import Form from './ListOfUsers';
 class App extends Component {
     render() {
         return (
-            <div className="App">
+            <div>
                 <header className="App-header">
                     <h1 className="App-title">EPAM Grand Hotel</h1>
                 </header>
