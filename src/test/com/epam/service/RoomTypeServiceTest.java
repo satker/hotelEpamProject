@@ -6,6 +6,7 @@ import com.epam.model.RoomType;
 import com.epam.repository.RoomTypeRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.util.Optional;
 
