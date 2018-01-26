@@ -6,30 +6,36 @@ import com.epam.mappers.UserMapper;
 import com.epam.model.User;
 import com.epam.repository.UserRepository;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import static org.junit.Assert.*;
 
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
 public class UserServiceTest {
-    private UserService userService;
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
+    @Mock
     private UserRepository mockUserRepository;
+    @Mock
     private UserMapper mockUserMapper;
+    @Mock
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private UserService userService;
 
     @Before
     public void setup() {
-        mockUserRepository = mock(UserRepository.class);
-        mockUserMapper = mock(UserMapper.class);
-        bCryptPasswordEncoder = mock(BCryptPasswordEncoder.class);
         userService = new UserService(mockUserRepository, mockUserMapper, bCryptPasswordEncoder);
     }
 
     @Test
-    public void save() {
+    public void saveUser() {
         UserDTO userDTO = InitialVariables.someUserDTO();
         User user = InitialVariables.someUser();
         AddUserDTO addUserDTO = InitialVariables.someAddUserDTO();
@@ -38,34 +44,33 @@ public class UserServiceTest {
         doReturn(userDTO).when(mockUserMapper).userToUserDto(user);
         doReturn(user).when(mockUserRepository).save(user);
 
-        UserDTO userDTOResult = userService.saveUser(addUserDTO);
+        userService.saveUser(addUserDTO);
 
         verify(mockUserMapper).addUserDtoToUser(addUserDTO);
         verify(mockUserRepository).save(user);
         verify(mockUserMapper).userToUserDto(user);
 
-        assertEquals(userDTOResult, userDTO);
-
+        verifyNoMoreInteractions(mockUserMapper, mockUserRepository);
     }
 
     @Test
-    public void find() {
+    public void findOneUserById() {
         User user = InitialVariables.someUser();
         UserDTO userDTO = InitialVariables.someUserDTO();
 
         doReturn(userDTO).when(mockUserMapper).userToUserDto(user);
         doReturn(Optional.of(user)).when(mockUserRepository).findById(any(Long.class));
 
-        UserDTO userDTOResult = userService.findOne(user.getId());
+        userService.findOne(user.getId());
 
         verify(mockUserMapper).userToUserDto(user);
         verify(mockUserRepository).findById(any(Long.class));
 
-        assertEquals(userDTOResult, userDTO);
+        verifyNoMoreInteractions(mockUserMapper, mockUserRepository);
     }
 
     @Test
-    public void update() {
+    public void updateUser() {
         User user = InitialVariables.someUser();
         UserDTO userDTO = InitialVariables.someUserDTO();
 
@@ -73,13 +78,12 @@ public class UserServiceTest {
         doReturn(userDTO).when(mockUserMapper).userToUserDto(user);
         doReturn(user).when(mockUserRepository).save(user);
 
-        UserDTO userResult = userService.updateUser(userDTO, 1L);
+        userService.updateUser(userDTO, 1L);
 
         verify(mockUserRepository).findOne(any(Long.class));
         verify(mockUserMapper).userToUserDto(user);
         verify(mockUserRepository).save(user);
 
-        assertEquals(userResult, userDTO);
-
+        verifyNoMoreInteractions(mockUserRepository, mockUserMapper);
     }
 }

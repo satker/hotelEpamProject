@@ -1,10 +1,7 @@
 package com.epam.service;
 
 import com.epam.dto.*;
-import com.epam.model.Room;
-import com.epam.model.RoomRequest;
-import com.epam.model.RoomType;
-import com.epam.model.User;
+import com.epam.model.*;
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
 
@@ -16,9 +13,11 @@ class InitialVariables {
     public static User someUser() {
         return random.nextObject(User.class);
     }
+
     public static AddUserDTO someAddUserDTO(){
         return random.nextObject(AddUserDTO.class);
     }
+
     public static UserDTO someUserDTO(){
         return random.nextObject(UserDTO.class);
     }
@@ -45,5 +44,13 @@ class InitialVariables {
 
     public static RoomRequestDTO someRoomRequestDTO(){
         return random.nextObject(RoomRequestDTO.class);
+    }
+
+    public static RoomConfirm someRoomConfirm(){
+        return random.nextObject(RoomConfirm.class);
+    }
+
+    public static RoomConfirmDTO someRoomConfirmDTO(){
+        return random.nextObject(RoomConfirmDTO.class);
     }
 }
