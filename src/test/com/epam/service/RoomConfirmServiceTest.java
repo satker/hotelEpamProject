@@ -4,7 +4,6 @@ import com.epam.dto.RoomConfirmDTO;
 import com.epam.mappers.RoomConfirmMapper;
 import com.epam.model.RoomConfirm;
 import com.epam.repository.RoomConfirmRepository;
-import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,7 +12,9 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
+
+import static org.mockito.Mockito.*;
 
 public class RoomConfirmServiceTest {
     @Rule
@@ -31,24 +32,52 @@ public class RoomConfirmServiceTest {
     }
 
     @Test
-    public void findByAccountUsername(){
-        RoomConfirm roomConfirm = InitialVariables.someRoomConfirm();
+    public void findRoomConfirmsByAccountUsername() {
         RoomConfirmDTO roomConfirmDTO = InitialVariables.someRoomConfirmDTO();
-        Collection<RoomConfirm> roomConfirms = new ArrayList<>();
+        List<RoomConfirm> roomConfirms = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             roomConfirms.add(InitialVariables.someRoomConfirm());
         }
+
+        doReturn(roomConfirmDTO).when(mockRoomConfirmMapper).confirmToConfirmDTO(roomConfirms.get(0));
+        doReturn(roomConfirms).when(mockRoomConfirmRepository).findByUserId(roomConfirms.get(0).getId());
+
+        roomConfirmService.findByAccountUsername(roomConfirms.get(0).getId());
+
+        verify(mockRoomConfirmMapper).confirmToConfirmDTO(roomConfirms.get(0));
+        verify(mockRoomConfirmRepository).findByUserId(roomConfirms.get(0).getId());
+
+        verifyNoMoreInteractions(mockRoomConfirmRepository);
+    }
+
+    @Test
+    public void saveRoomConfirm() {
+        RoomConfirm roomConfirm = InitialVariables.someRoomConfirm();
+        RoomConfirmDTO roomConfirmDTO = InitialVariables.someRoomConfirmDTO();
+
+        doReturn(roomConfirm).when(mockRoomConfirmMapper).confirmDTOToConfirm(roomConfirmDTO);
+
+        roomConfirmService.save(roomConfirmDTO);
+
+        verify(mockRoomConfirmMapper).confirmDTOToConfirm(roomConfirmDTO);
+        verify(mockRoomConfirmRepository).save(roomConfirm);
+
+        verifyNoMoreInteractions(mockRoomConfirmRepository, mockRoomConfirmMapper);
+    }
+
+    @Test
+    public void findOneRoomConfirmById() {
+        RoomConfirm roomConfirm = InitialVariables.someRoomConfirm();
+        RoomConfirmDTO roomConfirmDTO = InitialVariables.someRoomConfirmDTO();
+
+        doReturn(roomConfirm).when(mockRoomConfirmRepository).findOne(roomConfirmDTO.getUser().getId());
         doReturn(roomConfirmDTO).when(mockRoomConfirmMapper).confirmToConfirmDTO(roomConfirm);
 
-    }
+        roomConfirmService.findOne(roomConfirmDTO.getUser().getId());
 
-    @Test
-    public void saveRoomConfirm(){
+        verify(mockRoomConfirmRepository).findOne(roomConfirmDTO.getUser().getId());
+        verify(mockRoomConfirmMapper).confirmToConfirmDTO(roomConfirm);
 
-    }
-
-    @Test
-    public void findOneRoomConfirmById(){
-
+        verifyNoMoreInteractions(mockRoomConfirmMapper, mockRoomConfirmRepository);
     }
 }

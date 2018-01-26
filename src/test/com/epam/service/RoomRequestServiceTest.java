@@ -13,7 +13,6 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,29 +27,36 @@ public class RoomRequestServiceTest {
     private RoomRequestRepository mockRoomRequestRepository;
     @Mock
     private UserService mockUserService;
+
     private RoomRequestService roomRequestService;
 
     @Before
     public void setup() {
-        roomRequestService = new RoomRequestService(mockRoomRequestRepository, mockRoomRequestMapper, mockUserService);
+        roomRequestService = spy(new RoomRequestService(mockRoomRequestRepository, mockRoomRequestMapper, mockUserService));
     }
 
     @Test
     public void findValidateRoom() {
         UserDTO userDTO = InitialVariables.someUserDTO();
         RoomRequest roomRequest = InitialVariables.someRoomRequest();
-        RoomRequestDTO roomRequestDTO = InitialVariables.someRoomRequestDTO();
         List<RoomRequestDTO> requests = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             requests.add(InitialVariables.someRoomRequestDTO());
         }
 
-//        doReturn(userDTO).when(mockUserService).findUserByLogin(userDTO.getLogin());
-//        when(roomRequestService.findByAccountUsername(userDTO.getId())).thenReturn(requests);
-//        doReturn(Optional.of(roomRequest)).when(mockRoomRequestRepository).findById(roomRequest.getId());
-//        doReturn(roomRequestDTO).when(mockRoomRequestMapper).requestToRequestDTO(roomRequest);
-//
-//        roomRequestService.findValidateRoom(userDTO.getId(), userDTO.getLogin());
+        doReturn(userDTO).when(mockUserService).findUserByLogin(userDTO.getLogin());
+        doReturn(requests).when(roomRequestService).findByAccountUsername(userDTO.getId());
+        doReturn(Optional.of(roomRequest)).when(mockRoomRequestRepository).findById(userDTO.getId());
+        doReturn(requests.get(0)).when(mockRoomRequestMapper).requestToRequestDTO(roomRequest);
+
+        roomRequestService.findValidateRoom(userDTO.getId(), userDTO.getLogin());
+
+        verify(mockRoomRequestRepository, times(2)).findById(userDTO.getId());
+        verify(mockRoomRequestMapper, times(2)).requestToRequestDTO(roomRequest);
+        verify(mockUserService).findUserByLogin(userDTO.getLogin());
+        verify(roomRequestService).findByAccountUsername(userDTO.getId());
+
+        verifyNoMoreInteractions(mockRoomRequestRepository, mockRoomRequestMapper, mockUserService);
     }
 
     @Test
@@ -89,15 +95,13 @@ public class RoomRequestServiceTest {
         RoomRequest roomRequest = InitialVariables.someRoomRequest();
         RoomRequestDTO roomRequestDTO = InitialVariables.someRoomRequestDTO();
 
-        doReturn(roomRequest).when(mockRoomRequestRepository).findOne(roomRequest.getId());
-        doReturn(roomRequestDTO).when(mockRoomRequestMapper).requestToRequestDTO(roomRequest);
+        doReturn(roomRequest).when(mockRoomRequestMapper).requestDTOToRequest(roomRequestDTO);
 
         roomRequestService.save(roomRequestDTO);
 
-        verify(mockRoomRequestMapper).requestToRequestDTO(roomRequest);
-        verify(mockRoomRequestRepository).findOne(roomRequest.getId());
+        verify(mockRoomRequestMapper).requestDTOToRequest(roomRequestDTO);
+        verify(mockRoomRequestRepository).save(roomRequest);
 
         verifyNoMoreInteractions(mockRoomRequestMapper, mockRoomRequestRepository);
-
     }
 }
