@@ -5,7 +5,9 @@ import com.epam.model.*;
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
 
-class InitialVariables {
+import java.security.Principal;
+
+public class InitialVariables {
     private static final EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
             .stringLengthRange(5, 50)
             .build();
@@ -52,5 +54,9 @@ class InitialVariables {
 
     public static RoomConfirmDTO someRoomConfirmDTO(){
         return random.nextObject(RoomConfirmDTO.class);
+    }
+
+    public static Principal somePrincipal(){
+        return () -> random.nextObject(String.class);
     }
 }

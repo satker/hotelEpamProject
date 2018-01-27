@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.4.RELEASE</version>
+        <version>1.5.9.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -31,8 +31,28 @@
         <junit.version>4.12</junit.version>
         <org.slf4j.version>1.7.25</org.slf4j.version>
         <io.github.benas.version>3.7.0</io.github.benas.version>
+        <com.thetransactioncompany.version>2.6</com.thetransactioncompany.version>
     </properties>
     <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/com.ge.predix/spring-cors-filter -->
+        <dependency>
+            <groupId>com.ge.predix</groupId>
+            <artifactId>spring-cors-filter</artifactId>
+            <version>1.0.0</version>
+
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>io.github.benas</groupId>
             <artifactId>random-beans</artifactId>

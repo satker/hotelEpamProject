@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.epam.service.InitialVariables.*;
 import static org.mockito.Mockito.*;
 
 public class RoomRequestServiceTest {
@@ -37,11 +38,11 @@ public class RoomRequestServiceTest {
 
     @Test
     public void findValidateRoom() {
-        UserDTO userDTO = InitialVariables.someUserDTO();
-        RoomRequest roomRequest = InitialVariables.someRoomRequest();
+        UserDTO userDTO = someUserDTO();
+        RoomRequest roomRequest = someRoomRequest();
         List<RoomRequestDTO> requests = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            requests.add(InitialVariables.someRoomRequestDTO());
+            requests.add(someRoomRequestDTO());
         }
 
         doReturn(userDTO).when(mockUserService).findUserByLogin(userDTO.getLogin());
@@ -61,8 +62,8 @@ public class RoomRequestServiceTest {
 
     @Test
     public void deleteRoomRequestById() {
-        RoomRequest roomRequest = InitialVariables.someRoomRequest();
-        UserDTO userDTO = InitialVariables.someUserDTO();
+        RoomRequest roomRequest = someRoomRequest();
+        UserDTO userDTO = someUserDTO();
 
         doReturn(roomRequest).when(mockRoomRequestRepository).findOne(userDTO.getId());
 
@@ -76,8 +77,8 @@ public class RoomRequestServiceTest {
 
     @Test
     public void findOneRoomRequestById() {
-        RoomRequest roomRequest = InitialVariables.someRoomRequest();
-        RoomRequestDTO roomRequestDTO = InitialVariables.someRoomRequestDTO();
+        RoomRequest roomRequest = someRoomRequest();
+        RoomRequestDTO roomRequestDTO = someRoomRequestDTO();
 
         doReturn(roomRequest).when(mockRoomRequestRepository).findOne(roomRequest.getId());
         doReturn(roomRequestDTO).when(mockRoomRequestMapper).requestToRequestDTO(roomRequest);
@@ -92,8 +93,8 @@ public class RoomRequestServiceTest {
 
     @Test
     public void saveRoomRequest() {
-        RoomRequest roomRequest = InitialVariables.someRoomRequest();
-        RoomRequestDTO roomRequestDTO = InitialVariables.someRoomRequestDTO();
+        RoomRequest roomRequest = someRoomRequest();
+        RoomRequestDTO roomRequestDTO = someRoomRequestDTO();
 
         doReturn(roomRequest).when(mockRoomRequestMapper).requestDTOToRequest(roomRequestDTO);
 

@@ -14,6 +14,8 @@ import org.mockito.junit.MockitoRule;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.service.InitialVariables.someRoomConfirm;
+import static com.epam.service.InitialVariables.someRoomConfirmDTO;
 import static org.mockito.Mockito.*;
 
 public class RoomConfirmServiceTest {
@@ -33,10 +35,10 @@ public class RoomConfirmServiceTest {
 
     @Test
     public void findRoomConfirmsByAccountUsername() {
-        RoomConfirmDTO roomConfirmDTO = InitialVariables.someRoomConfirmDTO();
+        RoomConfirmDTO roomConfirmDTO = someRoomConfirmDTO();
         List<RoomConfirm> roomConfirms = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            roomConfirms.add(InitialVariables.someRoomConfirm());
+            roomConfirms.add(someRoomConfirm());
         }
 
         doReturn(roomConfirmDTO).when(mockRoomConfirmMapper).confirmToConfirmDTO(roomConfirms.get(0));
@@ -52,8 +54,8 @@ public class RoomConfirmServiceTest {
 
     @Test
     public void saveRoomConfirm() {
-        RoomConfirm roomConfirm = InitialVariables.someRoomConfirm();
-        RoomConfirmDTO roomConfirmDTO = InitialVariables.someRoomConfirmDTO();
+        RoomConfirm roomConfirm = someRoomConfirm();
+        RoomConfirmDTO roomConfirmDTO = someRoomConfirmDTO();
 
         doReturn(roomConfirm).when(mockRoomConfirmMapper).confirmDTOToConfirm(roomConfirmDTO);
 
@@ -67,8 +69,8 @@ public class RoomConfirmServiceTest {
 
     @Test
     public void findOneRoomConfirmById() {
-        RoomConfirm roomConfirm = InitialVariables.someRoomConfirm();
-        RoomConfirmDTO roomConfirmDTO = InitialVariables.someRoomConfirmDTO();
+        RoomConfirm roomConfirm = someRoomConfirm();
+        RoomConfirmDTO roomConfirmDTO = someRoomConfirmDTO();
 
         doReturn(roomConfirm).when(mockRoomConfirmRepository).findOne(roomConfirmDTO.getUser().getId());
         doReturn(roomConfirmDTO).when(mockRoomConfirmMapper).confirmToConfirmDTO(roomConfirm);

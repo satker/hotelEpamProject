@@ -13,6 +13,8 @@ import org.mockito.junit.MockitoRule;
 
 import java.util.Optional;
 
+import static com.epam.service.InitialVariables.someRoomType;
+import static com.epam.service.InitialVariables.someRoomTypeDTO;
 import static org.mockito.Mockito.*;
 
 public class RoomTypeServiceTest {
@@ -32,7 +34,7 @@ public class RoomTypeServiceTest {
 
     @Test
     public void deleteRoomTypeById() {
-        RoomType roomType = InitialVariables.someRoomType();
+        RoomType roomType = someRoomType();
 
         doReturn(roomType).when(mockRoomTypeRepository).findOne(roomType.getId());
 
@@ -46,8 +48,8 @@ public class RoomTypeServiceTest {
 
     @Test
     public void findOneRoomTypeById() {
-        RoomType roomType = InitialVariables.someRoomType();
-        RoomTypeDTO roomTypeDTO = InitialVariables.someRoomTypeDTO();
+        RoomType roomType = someRoomType();
+        RoomTypeDTO roomTypeDTO = someRoomTypeDTO();
 
         doReturn(Optional.of(roomType)).when(mockRoomTypeRepository).findById(roomType.getId());
         doReturn(roomTypeDTO).when(mockRoomTypeMapper).typeToTypeDTO(roomType);
@@ -62,8 +64,8 @@ public class RoomTypeServiceTest {
 
     @Test
     public void saveRoomType() {
-        RoomTypeDTO roomTypeDTO = InitialVariables.someRoomTypeDTO();
-        RoomType roomType = InitialVariables.someRoomType();
+        RoomTypeDTO roomTypeDTO = someRoomTypeDTO();
+        RoomType roomType = someRoomType();
 
         doReturn(roomType).when(mockRoomTypeMapper).typeDTOToType(roomTypeDTO);
 

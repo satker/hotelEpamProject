@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
+import static com.epam.service.InitialVariables.*;
 import static org.mockito.Mockito.*;
 
 public class UserServiceTest {
@@ -36,9 +37,9 @@ public class UserServiceTest {
 
     @Test
     public void saveUser() {
-        UserDTO userDTO = InitialVariables.someUserDTO();
-        User user = InitialVariables.someUser();
-        AddUserDTO addUserDTO = InitialVariables.someAddUserDTO();
+        UserDTO userDTO = someUserDTO();
+        User user = someUser();
+        AddUserDTO addUserDTO = someAddUserDTO();
 
         doReturn(user).when(mockUserMapper).addUserDtoToUser(addUserDTO);
         doReturn(userDTO).when(mockUserMapper).userToUserDto(user);
@@ -55,8 +56,8 @@ public class UserServiceTest {
 
     @Test
     public void findOneUserById() {
-        User user = InitialVariables.someUser();
-        UserDTO userDTO = InitialVariables.someUserDTO();
+        User user = someUser();
+        UserDTO userDTO = someUserDTO();
 
         doReturn(userDTO).when(mockUserMapper).userToUserDto(user);
         doReturn(Optional.of(user)).when(mockUserRepository).findById(any(Long.class));
@@ -71,8 +72,8 @@ public class UserServiceTest {
 
     @Test
     public void updateUser() {
-        User user = InitialVariables.someUser();
-        UserDTO userDTO = InitialVariables.someUserDTO();
+        User user = someUser();
+        UserDTO userDTO = someUserDTO();
 
         doReturn(user).when(mockUserRepository).findOne(any(Long.class));
         doReturn(userDTO).when(mockUserMapper).userToUserDto(user);
