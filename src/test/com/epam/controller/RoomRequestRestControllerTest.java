@@ -13,10 +13,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,8 +35,8 @@ public class RoomRequestRestControllerTest {
     private RoomRequestService roomRequestService;
     @Mock
     private UserService userService;
-    @Mock
-    private Principal principal;
+
+    private static final String DEFAULT_USERNAME = "user";
 
     @Spy
     @InjectMocks
@@ -56,20 +56,18 @@ public class RoomRequestRestControllerTest {
         RoomRequestDTO requestDTO = someRoomRequestDTO();
         UserDTO userDTO = someUserDTO();
         Long id = userDTO.getId();
-        String defaultName = userDTO.getLogin();
 
-        when(principal.getName()).thenReturn(defaultName);
-        doReturn(requestDTO).when(roomRequestService).findOne(id);
+        doReturn(requestDTO).when(roomRequestService).findValidateRoom(id, DEFAULT_USERNAME);
 
-        mockMvc.perform(get("/user/1/orders/{orderId}", id, principal))
+        mockMvc.perform(get("/user/1/orders/{orderId}", id)
+                .principal(new TestingAuthenticationToken(DEFAULT_USERNAME, null)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.arrivalDate", is(requestDTO.getArrivalDate().toString())))
                 .andExpect(jsonPath("$.departureDate", is(requestDTO.getDepartureDate().toString())))
                 .andExpect(jsonPath("$.roomType.name", is(requestDTO.getRoomType().getName())));
 
-        verify(roomRequestService).findOne(id);
-        verify(principal).getName();
+        verify(roomRequestService).findValidateRoom(id, DEFAULT_USERNAME);
 
         verifyNoMoreInteractions(roomRequestService);
     }
@@ -121,9 +119,8 @@ public class RoomRequestRestControllerTest {
                         .content(asJsonString(input)))
                 .andExpect(status().isCreated());
 
-        verify(roomRequestService).save(input);
         verify(userService).findUserById(user.getId());
 
-        verifyNoMoreInteractions(roomRequestService, userService);
+        verifyNoMoreInteractions(userService);
     }
 }

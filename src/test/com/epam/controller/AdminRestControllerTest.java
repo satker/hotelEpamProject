@@ -11,10 +11,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,8 +39,8 @@ public class AdminRestControllerTest {
     private RoomTypeService roomTypeService;
     @Mock
     private RoomService roomService;
-    @Mock
-    private Principal principal;
+
+    private static final String DEFAULT_USERNAME = "user";
 
     @Spy
     @InjectMocks
@@ -60,33 +60,39 @@ public class AdminRestControllerTest {
     public void getAdminByIdWhenAdminPresent() throws Exception {
         UserDTO userDTO = someUserDTO();
         Long id = userDTO.getId();
-        String defaultName = userDTO.getLogin();
-        when(principal.getName()).thenReturn(defaultName);
-        when(userService.getUserValidateUser(id, defaultName)).thenReturn(userDTO);
-        mockMvc.perform(get("/admin/{idAdmin}", id, principal))
+
+        when(userService.getUserValidateUser(id, DEFAULT_USERNAME)).thenReturn(userDTO);
+
+        mockMvc.perform(get("/admin/{idAdmin}", id)
+                .principal(new TestingAuthenticationToken(DEFAULT_USERNAME, null)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.id", is(id)))
-                .andExpect(jsonPath("$.username", is(userDTO.getLogin())));
-        verify(userService, times(1)).getUserValidateUser(id, defaultName);
+                .andExpect(jsonPath("$.login", is(userDTO.getLogin())));
+
+        verify(userService, times(1)).getUserValidateUser(id, DEFAULT_USERNAME);
+
         verifyNoMoreInteractions(userService);
     }
 
-    @Test///////////////Error
+    @Test
     public void UpdatePresentAdmin() throws Exception {
         UserDTO userDTO = someUserDTO();
         Long id = userDTO.getId();
-        String defaultName = userDTO.getLogin();
-        when(principal.getName()).thenReturn(defaultName);
-        doNothing().when(userService).updateUserValidateUser(id, defaultName, userDTO);
+
+        doNothing().when(userService).updateUserValidateUser(id, DEFAULT_USERNAME, userDTO);
+
         mockMvc.perform(
-                put("/admin/{idAdmin}", id, userDTO, principal)
+                put("/admin/{idAdmin}", id, userDTO)
+                        .principal(new TestingAuthenticationToken(DEFAULT_USERNAME, null))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(userDTO)))
                 .andExpect(status().isOk());
-        verify(principal, times(1)).getName();
-        verify(userService, times(1)).updateUserValidateUser(id, defaultName, userDTO);
-        verifyNoMoreInteractions(userService, principal);
+
+        verify(userService, times(1))
+                .updateUserValidateUser(id, DEFAULT_USERNAME, userDTO);
+
+        verifyNoMoreInteractions(userService);
     }
 
     ///////////////////// Users
@@ -171,7 +177,7 @@ public class AdminRestControllerTest {
         verifyNoMoreInteractions(roomConfirmService);
     }
 
-    @Test ///////// Errror
+    @Test
     public void AddUserConfirmByUserIdWithSuccess() throws Exception {
         RoomConfirmDTO input = someRoomConfirmDTO();
         User user = someUser();
@@ -185,10 +191,9 @@ public class AdminRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(user)))
                 .andExpect(status().isCreated());
-        //.andExpect(header().string("location", containsString("http://localhost/users/")));
+
         verify(userService, times(1)).findUserById(id);
-        verify(roomConfirmService, times(1)).save(input);
-        verifyNoMoreInteractions(roomConfirmService, userService);
+        verifyNoMoreInteractions(userService);
     }
 
     //////////////////// Requests

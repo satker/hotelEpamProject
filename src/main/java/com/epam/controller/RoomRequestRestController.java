@@ -32,7 +32,7 @@ class RoomRequestRestController {
 
     @GetMapping(value = "/{orderId}")
     RoomRequestDTO findValidateRoom(@PathVariable long orderId, Principal principal) {
-        return roomRequestService.findValidateRoom(orderId,principal.getName());
+        return roomRequestService.findValidateRoom(orderId, principal.getName());
     }
 
     @GetMapping
