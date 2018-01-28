@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.epam.service.InitialVariables.*;
+import static com.epam.InitialVariables.*;
 import static org.mockito.Mockito.*;
 
 public class RoomRequestServiceTest {

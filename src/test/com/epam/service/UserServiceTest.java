@@ -15,7 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
-import static com.epam.service.InitialVariables.*;
+import static com.epam.InitialVariables.*;
 import static org.mockito.Mockito.*;
 
 public class UserServiceTest {

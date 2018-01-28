@@ -14,8 +14,8 @@ import org.mockito.junit.MockitoRule;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.service.InitialVariables.someRoomConfirm;
-import static com.epam.service.InitialVariables.someRoomConfirmDTO;
+import static com.epam.InitialVariables.someRoomConfirm;
+import static com.epam.InitialVariables.someRoomConfirmDTO;
 import static org.mockito.Mockito.*;
 
 public class RoomConfirmServiceTest {

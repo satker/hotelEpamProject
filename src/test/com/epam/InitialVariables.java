@@ -1,4 +1,4 @@
-package com.epam.service;
+package com.epam;
 
 import com.epam.dto.*;
 import com.epam.model.*;
@@ -58,5 +58,9 @@ public class InitialVariables {
 
     public static Principal somePrincipal(){
         return () -> random.nextObject(String.class);
+    }
+
+    public static Long someLong(){
+        return random.nextObject(Long.class);
     }
 }

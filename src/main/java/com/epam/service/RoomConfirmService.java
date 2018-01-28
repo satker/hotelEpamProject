@@ -35,4 +35,9 @@ public class RoomConfirmService {
         log.debug("room confirm has been found by id {}", id);
         return roomConfirmMapper.confirmToConfirmDTO(roomConfirmRepository.findOne(id));
     }
+
+    public void deleteConfirmById(long id) {
+        log.debug("confirm has been deleted by id {}", id);
+        roomConfirmRepository.delete(roomConfirmRepository.findOne(id));
+    }
 }

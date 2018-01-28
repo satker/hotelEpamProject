@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,13 +29,18 @@ public class RoomRequestService {
         return roomRequestRepository.
                 findByUserId(id).
                 stream().
-                map(roomRequestMapper::requestToRequestDTO).collect(Collectors.toList());
+                map(roomRequestMapper::requestToRequestDTO).
+                collect(Collectors.toList());
     }
 
     public RoomRequestDTO findValidateRoom(long id, String login) {
         log.debug("room request has been found for validate user by id {}", id);
         long userId = userService.findUserByLogin(login).getId();
-        if (findByAccountUsername(userId).contains(roomRequestMapper.requestToRequestDTO(roomRequestRepository.findById(id).get()))) {
+        if (findByAccountUsername(userId).
+                contains(roomRequestMapper.
+                        requestToRequestDTO(roomRequestRepository.
+                                findById(id).
+                                get()))) {
             return roomRequestMapper.requestToRequestDTO(roomRequestRepository.findById(id).orElseThrow(() -> new RoomRequestNotFoundException(id)));
         } else {
             throw new AccessDeniedException(userId);

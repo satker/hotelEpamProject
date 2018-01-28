@@ -13,8 +13,8 @@ import org.mockito.junit.MockitoRule;
 
 import java.util.Optional;
 
-import static com.epam.service.InitialVariables.someRoomType;
-import static com.epam.service.InitialVariables.someRoomTypeDTO;
+import static com.epam.InitialVariables.someRoomType;
+import static com.epam.InitialVariables.someRoomTypeDTO;
 import static org.mockito.Mockito.*;
 
 public class RoomTypeServiceTest {

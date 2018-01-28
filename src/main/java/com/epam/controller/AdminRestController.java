@@ -22,7 +22,9 @@ public class AdminRestController {
     ////For admin
     @GetMapping(value = "/{idAdmin}")
     public UserDTO getValidateAdmin(@PathVariable("idAdmin") long id, Principal principal) {
-        return userService.getUserValidateUser(id, principal.getName());
+        return userService.
+                getUserValidateUser(id,
+                        principal.getName());
     }
 
     @PutMapping(value = "/{idAdmin}")
@@ -67,6 +69,16 @@ public class AdminRestController {
         return roomConfirmService.findByAccountUsername(userId);
     }
 
+    @GetMapping(value = "/{idAdmin}/users/{id}/confirms/{confirmId}")
+    RoomConfirmDTO readRoomConfirm(@PathVariable long confirmId) {
+        return roomConfirmService.findOne(confirmId);
+    }
+
+    @DeleteMapping(value = "/{idAdmin}/users/{id}/confirms/{confirmId}")
+    public void deleteConfirm(@PathVariable("confirmId") long confirmId, @PathVariable("id") String id) {
+        roomConfirmService.deleteConfirmById(confirmId);
+    }
+
     //// For Requests
     @GetMapping(value = "/users/{id}/orders")
     List<RoomRequestDTO> readRoomRequests(@PathVariable("id") long userId) {
@@ -100,8 +112,9 @@ public class AdminRestController {
     }
 
     @PostMapping(value = "/appartments")
-    void addType(@RequestBody RoomTypeDTO input) {
+    public ResponseEntity addType(@RequestBody RoomTypeDTO input) {
         roomTypeService.save(input);
+        return new ResponseEntity(null, HttpStatus.CREATED);
     }
 
     //// For Rooms
@@ -121,7 +134,8 @@ public class AdminRestController {
     }
 
     @PostMapping(value = "/appartments/{appartmentsId}/rooms")
-    public void addRoom(@RequestBody RoomDTO input, @PathVariable("appartmentsId") String appartmentsId) {
+    public ResponseEntity addRoom(@RequestBody RoomDTO input, @PathVariable("appartmentsId") String appartmentsId) {
         roomService.save(input);
+        return new ResponseEntity(null, HttpStatus.CREATED);
     }
 }
