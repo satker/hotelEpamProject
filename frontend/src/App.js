@@ -3,12 +3,22 @@ import './App.css';
 
 import Login from './FormLogin';
 import Register from './FormRegister';
+import ListOfUsers from './ListOfUsers';
+import ListOfOrders from './ListOfOrders';
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {screen: "login"};
         this.setScreen = this.setScreen.bind(this);
+        this.state = {
+            screen: "login",
+            forms: {
+                login: <Login setScreen={this.setScreen}/>,
+                register: <Register setScreen={this.setScreen}/>,
+                list_of_users: <ListOfUsers setScreen={this.setScreen}/>,
+                list_of_orders: <ListOfOrders setScreen={this.setScreen}/>,
+            },
+        };
     }
 
     componentWillMount() {
@@ -27,20 +37,7 @@ class App extends Component {
     }
 
     setScreen(scr) {
-        let form = null;
-        switch (scr) {
-            case "login":
-                form = <Login setScreen={this.setScreen}/>;
-                break;
-
-            case "register":
-                form = <Register setScreen={this.setScreen}/>;
-                break;
-
-            default:
-                form = <p>Error.</p>;
-        }
-        this.setState({screen: scr, form: form});
+        this.setState({screen: scr, form: this.state.forms[scr]});
     }
 }
 

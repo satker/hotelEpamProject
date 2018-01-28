@@ -14,7 +14,7 @@ export default class FormLogin extends Component {
 
     render() {
         return (
-            <form class="login" method="post" onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit}>
                 <label for="login">Login</label>
                 <input type="text" id="login" name="login" onChange={this.handleChange}/>
                 <label for="password">Password</label>
@@ -28,9 +28,8 @@ export default class FormLogin extends Component {
 
     async handleSubmit(evt) {
         evt.preventDefault();
-        let resp = await fetch(URL, {method:"POST", body:this.state});
-        alert(this.props.test);
-        /** TODO **/
+        /** TODO login request **/
+        this.props.setScreen("list_of_users"); // For debug only
     }
 
     onClickRegister(evt) {

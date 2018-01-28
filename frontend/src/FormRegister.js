@@ -12,7 +12,7 @@ class FormRegister extends Component {
 
     render() {
         return (
-            <form method="post" action="">
+            <form onSubmit={this.handleSubmit}>
                 <label for="login">Login</label>
                 <input type="text" id="login" name="login"/>
                 <label for="password">Password</label>
