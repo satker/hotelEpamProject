@@ -23,7 +23,7 @@ public class RoomConfirmRestController {
     }
 
     @GetMapping(value = "/{confirmsId}")
-    RoomConfirmDTO readRoomRequest(@PathVariable long userId) {
-        return roomConfirmService.findOne(userId);
+    RoomConfirmDTO readRoomRequest(@PathVariable long confirmsId) {
+        return roomConfirmService.findOne(confirmsId);
     }
 }
