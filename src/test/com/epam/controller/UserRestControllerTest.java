@@ -5,11 +5,11 @@ import com.epam.dto.UserDTO;
 import com.epam.service.UserService;
 import com.ge.predix.web.cors.CORSFilter;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,19 +25,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 public class UserRestControllerTest {
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
     private MockMvc mockMvc;
     @Mock
     private UserService userService;
 
     private static final String DEFAULT_USERNAME = "user";
 
-    @Spy
-    @InjectMocks
-    private UserRestController mockUserRestController;
-
     @Before
     public void init() {
-        MockitoAnnotations.initMocks(this);
+        UserRestController mockUserRestController =
+                new UserRestController(userService);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(mockUserRestController)
                 .addFilters(new CORSFilter())
