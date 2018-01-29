@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import './Form.css'
 
-const URL = "http://localhost:8080/login";
+const URL_FORM = "http://localhost:8080/login";
+const URL_LOGIN = "http://localhost:8080/app-login";
 
 export default class FormLogin extends Component {
     constructor(props) {
@@ -28,8 +29,18 @@ export default class FormLogin extends Component {
 
     async handleSubmit(evt) {
         evt.preventDefault();
-        /** TODO login request **/
-        this.props.setScreen("list_of_users"); // For debug only
+        //console.log(await (await fetch(URL_FORM)).text());
+        let resp = await fetch(URL_LOGIN, {
+            method: "POST",
+            body: {
+                app_username: "aleksey",
+                app_password: "m123",
+            },
+        });
+        console.log(resp.status);
+        let text = await resp.text();
+        console.log(text);
+        //this.props.setScreen("list_of_users"); // For debug only
     }
 
     onClickRegister(evt) {

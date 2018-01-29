@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Table} from 'reactstrap';
 import ItemUser from './ItemUser';
 
-const URL = "http://localhost:8080/admin/0/users";
+const URL = "http://localhost:8080/admin/1/users";
 
 class ListOfUsers extends Component {
     constructor(props) {
@@ -44,6 +44,7 @@ class ListOfUsers extends Component {
     async loadList() {
         let resp = await fetch(URL);
         let data = await resp.text();
+        console.log(data);
         this.setState({list: JSON.parse(data)});
     }
 }
