@@ -3,13 +3,14 @@ package com.epam.controller;
 import com.epam.dto.RoomConfirmDTO;
 import com.epam.dto.UserDTO;
 import com.epam.service.RoomConfirmService;
+import com.epam.service.UserService;
 import com.ge.predix.web.cors.CORSFilter;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -24,17 +25,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class RoomConfirmRestControllerTest {
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
     private MockMvc mockMvc;
     @Mock
     private RoomConfirmService roomConfirmService;
+    @Mock
+    private UserService userService;
 
-    @Spy
-    @InjectMocks
-    private RoomConfirmRestController mockRoomConfirmRestController;
 
     @Before
     public void init() {
-        MockitoAnnotations.initMocks(this);
+        RoomConfirmRestController mockRoomConfirmRestController =
+                new RoomConfirmRestController(roomConfirmService, userService);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(mockRoomConfirmRestController)
                 .addFilters(new CORSFilter())

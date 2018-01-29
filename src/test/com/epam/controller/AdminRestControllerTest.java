@@ -5,11 +5,11 @@ import com.epam.model.User;
 import com.epam.service.*;
 import com.ge.predix.web.cors.CORSFilter;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,6 +28,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class AdminRestControllerTest {
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
     private MockMvc mockMvc;
     @Mock
     private UserService userService;
@@ -42,13 +44,11 @@ public class AdminRestControllerTest {
 
     private static final String DEFAULT_USERNAME = "user";
 
-    @Spy
-    @InjectMocks
-    private AdminRestController mockAdminRestController;
-
     @Before
     public void init() {
-        MockitoAnnotations.initMocks(this);
+        AdminRestController mockAdminRestController =
+                new AdminRestController(roomConfirmService, userService,
+                        roomRequestService, roomService, roomTypeService);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(mockAdminRestController)
                 .addFilters(new CORSFilter())

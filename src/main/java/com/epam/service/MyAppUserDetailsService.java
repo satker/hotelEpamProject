@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +25,7 @@ public class MyAppUserDetailsService implements UserDetailsService {
         log.debug("user has been loaded by username {}", s);
         com.epam.model.User user = userRepository.findByLogin(s).get();
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
-        UserDetails userDetails = (UserDetails) new User(user.getLogin(),
-                user.getPassword(), Arrays.asList(authority));
-        return userDetails;
+        return new User(user.getLogin(),
+                user.getPassword(), Collections.singletonList(authority));
     }
 }
