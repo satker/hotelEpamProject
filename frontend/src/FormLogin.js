@@ -29,18 +29,18 @@ export default class FormLogin extends Component {
 
     async handleSubmit(evt) {
         evt.preventDefault();
-        //console.log(await (await fetch(URL_FORM)).text());
-        let resp = await fetch(URL_LOGIN, {
-            method: "POST",
-            body: {
-                app_username: "aleksey",
-                app_password: "m123",
-            },
-        });
-        console.log(resp.status);
-        let text = await resp.text();
-        console.log(text);
-        //this.props.setScreen("list_of_users"); // For debug only
+
+        let oReq = new XMLHttpRequest();
+        oReq.open("POST", URL_LOGIN, true);
+        oReq.onreadystatechange = () => {
+            console.log(oReq.status);
+            if( oReq.readyState === 4 ) {
+                console.log(oReq.responseText);
+            }
+        };
+        oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        oReq.withCredentials = true;
+        oReq.send("app_username=aleksey&app_password=m123");
     }
 
     onClickRegister(evt) {
