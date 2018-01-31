@@ -29,19 +29,21 @@ export default class MainUserPage extends Component {
                     <tbody>
                     <tr>
                         <td>
-                            <Button onClick={() => this.props.setScreen("list_of_orders", {user: me})}>View Requests</Button>
+                            <Button onClick={() => this.props.setScreen("list_of_orders", {user: me})}>View
+                                Requests</Button>
                         </td>
                         <td>
-                            <Button onClick={() => this.props.setScreen("list_of_confirmed", {user: me})}>View Confirmed</Button>
+                            <Button onClick={() => this.props.setScreen("list_of_confirmed", {user: me})}>View
+                                Confirmed</Button>
                         </td>
                         <td>
-                            <Button onClick={()=>this.props.setScreen("create_request")}>Create request</Button>
+                            <Button onClick={() => this.props.setScreen("create_request")}>Create request</Button>
                         </td>
                     </tr>
                     </tbody>
                 </Table>
                 <br/>
-                <Button className="btn-danger">Edit profile</Button>
+                <Button className="btn-danger" onClick={() => this.props.setScreen("edit_profile")}>Edit profile</Button>
             </Container>
         );
     }

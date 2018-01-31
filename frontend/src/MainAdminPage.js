@@ -1,5 +1,5 @@
 import React from "react";
-import {Table, Container, Button} from "reactstrap";
+import {Table, Container} from "reactstrap";
 
 import ItemUser from "./ItemUser";
 

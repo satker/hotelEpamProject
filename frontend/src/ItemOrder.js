@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Button} from "reactstrap";
 
-const URL_DELETE = "http://localhost:8080/user/_user_/order/_id_";
+const URL_DELETE = "http://localhost:8080/user/_user_/orders/_id_";
 
 export default class ItemOrder extends Component {
     constructor(props) {
@@ -15,6 +15,7 @@ export default class ItemOrder extends Component {
             .replace("_id_", this.props.order.id);
         let resp = await fetch(url, {method: "delete"});
         console.log( await resp.text() );
+        this.props.refresh();
     }
 
     confirmButton() {
@@ -32,7 +33,6 @@ export default class ItemOrder extends Component {
             return null;
         }
 
-        let user = this.props.user;
         return (
             <tr>
                 <td>{order.capacity}</td>

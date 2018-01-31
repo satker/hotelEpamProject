@@ -1,5 +1,5 @@
 import React from "react";
-import {Table, Container, Button, Form, Row, Col} from "reactstrap";
+import {Container, Form, Row, Col} from "reactstrap";
 
 const URL = "http://localhost:8080/user/_id_/orders";
 
@@ -27,6 +27,7 @@ export default class CreateRequest extends React.Component {
         });
         let text = await resp.text();
         console.log(text);
+        this.props.goBack();
     }
 
     render() {
@@ -36,7 +37,7 @@ export default class CreateRequest extends React.Component {
                     <Container>
                         <Row>
                             <Col>Capacity</Col>
-                            <Col><input onChange={this.onChange} type="text" name="capacity" value="2"/></Col>
+                            <Col><input onChange={this.onChange} type="text" name="capacity"/></Col>
                         </Row>
                         <Row>
                             <Col>Arrival date</Col>

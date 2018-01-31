@@ -37,7 +37,7 @@ export default class ListOfRooms extends Component {
                 </thead>
                 <tbody>
                 {this.state.list.map(order =>
-                    <ItemOrder me={this.props.me()} user={this.props.user()} order={order}/>)}
+                    <ItemOrder me={this.props.me()} user={this.props.user()} order={order} refresh={()=>this.forceUpdate()}/>)}
                 </tbody>
             </Table>
         );

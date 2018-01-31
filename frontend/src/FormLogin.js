@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './Form.css'
 
-const URL_FORM = "http://localhost:8080/login";
 const URL_LOGIN = "http://localhost:8080/app-login";
 
 export default class FormLogin extends Component {
@@ -22,7 +21,7 @@ export default class FormLogin extends Component {
                 <input type="password" id="password" name="password" onChange={this.handleChange}/>
                 <input className="btn btn-success" type="submit" value="Login"/>
                 <br/>
-                <a href="" class="hint" onClick={this.onClickRegister}>Do not have account?</a>
+                <a href="" class="hint" onClick={this.onClickRegister}>Do not have an account?</a>
             </form>
         );
     }
@@ -38,15 +37,24 @@ export default class FormLogin extends Component {
             },
             body: "app_username=" + this.state.login + "&app_password=" + this.state.password,
         });
+
         let text = await resp.text();
         console.log(text);
+
         if( resp.status === 200 ) {
-            let user = JSON.parse(text);
-            if (user.role === "ROLE_ADMIN") {
-                this.props.setScreen("admin_home", {me: user});
-            } else {
-                this.props.setScreen("user_home", {me: user});
+            try {
+                let user = JSON.parse(text);
+                user.truePassword = this.state.password;
+                if (user.role === "ROLE_ADMIN") {
+                    this.props.setScreen("admin_home", {me: user});
+                } else {
+                    this.props.setScreen("user_home", {me: user});
+                }
+            } catch(e) {
+                this.error("Failed to login");
             }
+        } else {
+            this.error("Failed to login");
         }
     }
 
@@ -58,4 +66,8 @@ export default class FormLogin extends Component {
     handleChange(evt) {
         this.setState({[evt.target.name]: evt.target.value});
     }
-}
+
+    error(str) {
+        alert(str);
+    }
+};
