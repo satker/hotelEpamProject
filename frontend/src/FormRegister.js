@@ -46,10 +46,10 @@ class FormRegister extends Component {
         };
         req.setRequestHeader("Content-Type", "application/json");
         req.send(JSON.stringify({
-            login: "user",
+            login: "userr",
             firstName: "name",
             lastName: "surname",
-            password: "123",
+            password: "12345678",
         }));
     }
 
@@ -62,10 +62,10 @@ class FormRegister extends Component {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                login: "user",
+                login: "userr",
                 firstName: "name",
                 lastName: "surname",
-                password: "123",
+                password: "123455678",
             }),
         });
     }

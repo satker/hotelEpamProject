@@ -30,27 +30,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .cors()
-                    .and()
+
+
+        http.cors().and()
                 .authorizeRequests()
-                    .antMatchers("/admin/**").hasAnyRole("ADMIN")
-                    .and()
+                .antMatchers("/admin/**").hasAnyRole("ADMIN")
+                .and()
                 .formLogin()
-                    .loginPage("/login").failureUrl("/login?error=true")
-                    .loginProcessingUrl("/app-login")
-                    .usernameParameter("app_username")
-                    .passwordParameter("app_password")
-                    .defaultSuccessUrl("/user")
-                    .and()
+                .loginPage("/login").failureUrl("/login?error=true")
+                .loginProcessingUrl("/app-login")
+                .usernameParameter("app_username")
+                .passwordParameter("app_password")
+                .defaultSuccessUrl("/user")
+                .and()
                 .csrf()
-                    .disable()
+                .disable()
                 .logout()
-                    .logoutUrl("/app-logout")
-                    .logoutSuccessUrl("/login")
-                    .and()
+                .logoutUrl("/app-logout")
+                .logoutSuccessUrl("/login")
+                .and()
                 .exceptionHandling()
-                    .accessDeniedPage("/error");
+                .accessDeniedPage("/error");
     }
 
     @Autowired
@@ -60,10 +60,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","OPTIONS"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
+        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

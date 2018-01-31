@@ -25,7 +25,6 @@ public class User {
     @NotNull
     private String lastName;
     @NotNull
-    @Min(6)
     private String password;
     @NotNull
     private String role = "USER";
