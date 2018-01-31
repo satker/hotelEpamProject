@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.4.RELEASE</version>
+        <version>1.5.9.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -27,9 +27,37 @@
         <org.apache.maven.plugins.version>3.7.0</org.apache.maven.plugins.version>
         <org.bsc.maven.version>3.3.2</org.bsc.maven.version>
         <mysql.version>5.1.6</mysql.version>
+        <org.mockito.version>1.10.19</org.mockito.version>
+        <junit.version>4.12</junit.version>
+        <org.slf4j.version>1.7.25</org.slf4j.version>
+        <io.github.benas.version>3.7.0</io.github.benas.version>
+        <com.thetransactioncompany.version>2.6</com.thetransactioncompany.version>
     </properties>
-
     <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/com.ge.predix/spring-cors-filter -->
+        <dependency>
+            <groupId>com.ge.predix</groupId>
+            <artifactId>spring-cors-filter</artifactId>
+            <version>1.0.0</version>
+
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.benas</groupId>
+            <artifactId>random-beans</artifactId>
+            <version>${io.github.benas.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -43,10 +71,37 @@
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${org.slf4j.version}</version>
+        </dependency>
+        <!-- Dependency for JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <!--<scope>test</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${org.mockito.version}</version>
+            <!--<scope>test</scope>-->
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${org.projectlombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -68,6 +123,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>LATEST</version>
         </dependency>
     </dependencies>
 
@@ -125,4 +190,10 @@
 
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <url>http://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
 </project>
