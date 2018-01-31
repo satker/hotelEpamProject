@@ -8,11 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("user/{userId}/orders")
+@RequestMapping("/user/{userId}/orders")
 @RequiredArgsConstructor
 class RoomRequestRestController {
 
@@ -31,8 +32,8 @@ class RoomRequestRestController {
     }
 
     @GetMapping(value = "/{orderId}")
-    RoomRequestDTO readRoomRequest(@PathVariable long userId, @PathVariable long orderId) {
-        return roomRequestService.findOne(orderId);
+    RoomRequestDTO findValidateRoom(@PathVariable long orderId, Principal principal) {
+        return roomRequestService.findValidateRoom(orderId, principal.getName());
     }
 
     @GetMapping
