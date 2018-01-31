@@ -5,6 +5,9 @@ form {
     background: #f5f5f5;
     text-align: left;
 }
+.wide-form {
+    width: 600px;
+}
 
 label:first-child {
     margin-top: 0;

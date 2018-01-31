@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Table} from 'reactstrap';
 import ItemOrder from './ItemOrder';
 
-const URL = "http://localhost:8080/user/2/orders";
+const URL = "http://localhost:8080/user/_id_/orders";
 
 export default class ListOfRooms extends Component {
     constructor(props) {
@@ -11,7 +11,7 @@ export default class ListOfRooms extends Component {
     }
 
     async componentDidMount() {
-        let resp = await fetch(URL);
+        let resp = await fetch(URL.replace("_id_", this.props.user().id));
         let data = await resp.text();
         this.setState({list: JSON.parse(data)});
     }
@@ -27,17 +27,17 @@ export default class ListOfRooms extends Component {
             <Table hover>
                 <thead>
                 <tr>
-                    <th>Status</th>
                     <th>Capacity</th>
                     <th>Arrival date</th>
                     <th>Departure date</th>
                     <th>Service class</th>
                     <th>Description</th>
+                    <th colSpan="2">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 {this.state.list.map(order =>
-                    <ItemOrder order={order}/>)}
+                    <ItemOrder me={this.props.me()} user={this.props.user()} order={order}/>)}
                 </tbody>
             </Table>
         );

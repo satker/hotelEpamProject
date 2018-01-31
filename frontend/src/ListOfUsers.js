@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Table} from 'reactstrap';
 import ItemUser from './ItemUser';
 
-const URL = "http://localhost:8080/admin/1/users";
+const URL = "http://localhost:8080/admin/users";
 
 class ListOfUsers extends Component {
     constructor(props) {

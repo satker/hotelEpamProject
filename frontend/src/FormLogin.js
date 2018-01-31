@@ -20,7 +20,7 @@ export default class FormLogin extends Component {
                 <input type="text" id="login" name="login" onChange={this.handleChange}/>
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" onChange={this.handleChange}/>
-                <input type="submit" value="Login"/>
+                <input className="btn btn-success" type="submit" value="Login"/>
                 <br/>
                 <a href="" class="hint" onClick={this.onClickRegister}>Do not have account?</a>
             </form>
@@ -30,17 +30,24 @@ export default class FormLogin extends Component {
     async handleSubmit(evt) {
         evt.preventDefault();
 
-        let oReq = new XMLHttpRequest();
-        oReq.open("POST", URL_LOGIN, true);
-        oReq.onreadystatechange = () => {
-            console.log(oReq.status);
-            if( oReq.readyState === 4 ) {
-                console.log(oReq.responseText);
+        let resp = await fetch(URL_LOGIN, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "content-type": "application/x-www-form-urlencoded",
+            },
+            body: "app_username=" + this.state.login + "&app_password=" + this.state.password,
+        });
+        let text = await resp.text();
+        console.log(text);
+        if( resp.status === 200 ) {
+            let user = JSON.parse(text);
+            if (user.role === "ROLE_ADMIN") {
+                this.props.setScreen("admin_home", {me: user});
+            } else {
+                this.props.setScreen("user_home", {me: user});
             }
-        };
-        oReq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        oReq.withCredentials = true;
-        oReq.send("app_username=aleksey&app_password=m123");
+        }
     }
 
     onClickRegister(evt) {
