@@ -14,12 +14,15 @@ export default class ItemOrder extends Component {
     }
 
     async componentDidMount() {
-        let resp = await fetch(URL_ROOMS.replace("_id_", this.props.order.roomType.id), {
-            credentials: "include",
-        });
-        let text = await resp.text();
-        console.log(text);
-        this.setState({rooms: JSON.parse(text)});
+        if(this.props.me.role === "ROLE_ADMIN") {
+            let resp = await fetch(URL_ROOMS.replace("_id_", this.props.order.roomType.id), {
+                credentials: "include",
+            });
+            let text = await resp.text();
+            console.log(text);
+            let rooms = JSON.parse(text);
+            this.setState({rooms: rooms, roomNumber: rooms[0].number});
+        }
     }
 
     async deleteOrder() {
@@ -34,7 +37,7 @@ export default class ItemOrder extends Component {
     async adminConfirm() {
         let room = this.state.rooms.find(room => room.number == this.state.roomNumber);
 
-        let resp = await fetch(URL_CONFIRM.replace("_id_", this.props.user.id), {
+        fetch(URL_CONFIRM.replace("_id_", this.props.user.id), {
             method: "post",
             credentials: "include",
             headers: {
@@ -70,6 +73,7 @@ export default class ItemOrder extends Component {
 
         return (
             <tr>
+                <td>{order.idDone ? "Done" : "Pending"}</td>
                 <td>{order.capacity}</td>
                 <td>{order.arrivalDate}</td>
                 <td>{order.departureDate}</td>

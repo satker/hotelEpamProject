@@ -36,7 +36,7 @@ class App extends Component {
                 user_home: <MainUserPage setScreen={this.setScreen} me={this.getCurrentUser}/>,
                 admin_home: <MainAdminPage setScreen={this.setScreen} me={this.getCurrentUser}/>,
                 user_info: <UserInfoPage setScreen={this.setScreen} me={this.getCurrentUser}
-                                         user={this.getTargetUser}/>,
+                                         user={this.getTargetUser} goBack={this.goBack}/>,
                 create_request: <CreateRequest me={this.getCurrentUser} goBack={this.goBack}/>,
                 edit_profile: <EditProfile me={this.getCurrentUser} goBack={this.goBack}/>,
                 confirm: <AdminConfirmPage user={this.getTargetUser} goBack={this.goBack}/>,

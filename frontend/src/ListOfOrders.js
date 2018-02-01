@@ -33,6 +33,7 @@ export default class ListOfRooms extends Component {
             <Table hover>
                 <thead>
                 <tr>
+                    <th>Status</th>
                     <th>Capacity</th>
                     <th>Arrival date</th>
                     <th>Departure date</th>

@@ -11,7 +11,11 @@ export default class ListOfConfirmed extends React.Component {
         this.state = {list: null};
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.load();
+    }
+
+    async load() {
         let resp = await fetch(URL.replace("_id_", this.props.user().id), {credentials: "include"});
         let text = await resp.text();
         console.log(text);
@@ -24,7 +28,7 @@ export default class ListOfConfirmed extends React.Component {
                 <td>Loading...</td>
             </tr>
         }
-        return this.state.list.map(conf => <ItemConfirmed me={this.props.me()} order={conf}/>)
+        return this.state.list.map(conf => <ItemConfirmed refresh={()=>this.load()} me={this.props.me()} user={this.props.user()} order={conf}/>)
     }
 
     render() {

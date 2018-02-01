@@ -17,7 +17,8 @@ export default class CreateRequest extends React.Component {
     async componentDidMount() {
         let resp = await fetch(URL.replace("_id_", this.props.me().id) + "/appartments");
         let text = await resp.text();
-        this.setState({roomTypes: JSON.parse(text)});
+        let types = JSON.parse(text);
+        this.setState({roomTypes: types, roomType: types[0].name});
     }
 
     onChange(evt) {
@@ -27,18 +28,20 @@ export default class CreateRequest extends React.Component {
     async onSubmit(evt) {
         evt.preventDefault();
 
-        let body = {
+        /*let body = {
             "capacity": "5",
             "arrivalDate": "2018-02-03",
             "departureDate": "2018-02-17",
             "idDone": false,
             "roomType": {"id": "2", "name": "ord", "description": "small room"},
             "user": this.props.me(),
-        };
-        /*for(let key of ["capacity", "arrivalDate", "departureDate", "idDone"]) {
+        };*/
+        let body = {};
+        for(let key of ["capacity", "arrivalDate", "departureDate", "idDone"]) {
             body[key] = this.state[key];
         }
-        body.roomType = {name:"ord", description:"small room"};*/
+        body.roomType = this.state.roomTypes.find(room => room.name === this.state.roomType);
+        body.user = this.props.me();
 
         let resp = await fetch(URL.replace("_id_", this.props.me().id), {
             method: "post",

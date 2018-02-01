@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import {Button} from "reactstrap";
 
-const URL = "http://localhost:8080/user/_id_/orders";
+const URL_ORDERS = "http://localhost:8080/user/_id_/orders";
+const URL_CONFIRMED = "http://localhost:8080/user/_id_/confirms";
 
 export default class ItemUser extends Component {
     constructor(props) {
@@ -31,20 +32,15 @@ export default class ItemUser extends Component {
     }
 
     async componentDidMount() {
-        let resp = await fetch(URL.replace("_id_", this.props.user.id), {credentials: "include"});
+        let resp = await fetch(URL_ORDERS.replace("_id_", this.props.user.id), {credentials: "include"});
         let text = await resp.text();
         let list = JSON.parse(text);
 
-        let r = 0, c = 0;
-        for (let order of list) {
-            if (order.isDone) {
-                c++;
-            } else {
-                r++;
-            }
-        }
+        let resp2 = await fetch(URL_CONFIRMED.replace("_id_", this.props.user.id));
+        let text2 = await resp2.text();
+        let list2 = JSON.parse(text2);
 
-        this.setState({requests: r, confirmed: c});
+        this.setState({requests: list.length, confirmed: list2.length});
     }
 
     render() {

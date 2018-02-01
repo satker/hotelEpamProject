@@ -20,7 +20,7 @@ export default class UserInfoPage extends React.Component {
             method: "delete",
             credentials: "include",
         });
-        console.log(await resp.text());
+        this.props.goBack();
     }
 
     render() {
