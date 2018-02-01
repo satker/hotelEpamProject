@@ -34,7 +34,7 @@ export default class ItemUser extends Component {
     async componentDidMount() {
         let resp = await fetch(URL_ORDERS.replace("_id_", this.props.user.id), {credentials: "include"});
         let text = await resp.text();
-        let list = JSON.parse(text);
+        let list = JSON.parse(text).filter(order => !order.idDone);
 
         let resp2 = await fetch(URL_CONFIRMED.replace("_id_", this.props.user.id));
         let text2 = await resp2.text();
@@ -47,7 +47,7 @@ export default class ItemUser extends Component {
         let user = this.props.user;
         return (
             <tr>
-                <td><Button className="btn-block" onClick={this.toUserPage}>{user.login}</Button></td>
+                <td><Button className="btn-dark btn-block" onClick={this.toUserPage}>{user.login}</Button></td>
                 <td><Button className="btn-block" onClick={this.toUserRequests}>{this.state.requests}</Button></td>
                 <td><Button className="btn-block" onClick={this.toUserConfirm}>{this.state.confirmed}</Button></td>
             </tr>

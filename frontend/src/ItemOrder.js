@@ -29,15 +29,14 @@ export default class ItemOrder extends Component {
         let url = URL_DELETE
             .replace("_user_", this.props.user.id)
             .replace("_id_", this.props.order.id);
-        let resp = await fetch(url, {method: "delete"});
-        console.log(await resp.text());
+        await fetch(url, {method: "delete"});
         this.props.refresh();
     }
 
     async adminConfirm() {
         let room = this.state.rooms.find(room => room.number == this.state.roomNumber);
 
-        fetch(URL_CONFIRM.replace("_id_", this.props.user.id), {
+        await fetch(URL_CONFIRM.replace("_id_", this.props.user.id), {
             method: "post",
             credentials: "include",
             headers: {
@@ -49,6 +48,8 @@ export default class ItemOrder extends Component {
                 room: room,
             }),
         });
+
+        this.props.refresh();
     }
 
     confirmButton() {

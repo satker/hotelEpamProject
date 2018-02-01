@@ -62,6 +62,9 @@ class App extends Component {
         if (!ignoreStack) {
             nextState.stack.push(scr);
         }
+        if (scr === "login" || scr === "register") {
+            nextState.stack = [];
+        }
         this.setState(nextState);
     }
 

@@ -2,6 +2,7 @@ import React from "react";
 import {Table, Container} from "reactstrap";
 
 import ItemUser from "./ItemUser";
+import LogoutButton from "./LogoutButton";
 
 const URL = "http://localhost:8080/admin/users";
 
@@ -35,6 +36,9 @@ export default class MainAdminPage extends React.Component {
         return (
             <Container>
                 <b><h1>Admin page</h1></b>
+                <LogoutButton setScreen={this.props.setScreen}/>
+                <br/>
+                <br/>
                 <Table>
                     <thead>
                     <tr>

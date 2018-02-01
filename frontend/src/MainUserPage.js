@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Table, Container, Button} from "reactstrap";
+import LogoutButton from "./LogoutButton";
 
 export default class MainUserPage extends Component {
     render() {
@@ -23,6 +24,8 @@ export default class MainUserPage extends Component {
                     </tr>
                     </tbody>
                 </Table>
+                <LogoutButton setScreen={this.props.setScreen}/>
+                <br/>
                 <br/>
                 <b><h3>Actions with requests:</h3></b>
                 <Table>
