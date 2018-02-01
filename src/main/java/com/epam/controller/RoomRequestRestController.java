@@ -1,7 +1,9 @@
 package com.epam.controller;
 
 import com.epam.dto.RoomRequestDTO;
+import com.epam.dto.RoomTypeDTO;
 import com.epam.service.RoomRequestService;
+import com.epam.service.RoomTypeService;
 import com.epam.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,8 @@ import java.util.List;
 class RoomRequestRestController {
 
     private final RoomRequestService roomRequestService;
+    private final RoomTypeService roomTypeService;
+
 
     private final UserService userService;
 
@@ -43,5 +47,15 @@ class RoomRequestRestController {
     @DeleteMapping(value = "/{orderId}")
     public void deleteOrder(@PathVariable("orderId") long id) {
         roomRequestService.deleteRoomRequestById(id);
+    }
+
+    @GetMapping(value = "/appartments")
+    List<RoomTypeDTO> findAllTypes() {
+        return roomTypeService.findAllTypes();
+    }
+
+    @GetMapping(value = "/appartments/{appartmentsId}")
+    RoomTypeDTO findTypeById(@PathVariable long appartmentsId) {
+        return roomTypeService.findOne(appartmentsId);
     }
 }
