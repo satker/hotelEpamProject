@@ -86,7 +86,7 @@ public class RoomRequestRestControllerTest {
             requests.add(someRoomRequestDTO());
         }
 
-        doReturn(requests).when(roomRequestService).findByAccountUsername(userDTO.getId());
+        doReturn(requests).when(roomRequestService).findRequestsByAccountUsername(userDTO.getId());
 
         mockMvc.perform(get("/user/{userId}/orders", userDTO.getId()))
                 .andExpect(status().isOk())
@@ -95,7 +95,7 @@ public class RoomRequestRestControllerTest {
                 .andExpect(jsonPath("$.[1].idDone", is(requests.get(1).isIdDone())))
                 .andExpect(jsonPath("$.[1].arrivalDate", is(requests.get(1).getArrivalDate().toString())));
 
-        verify(roomRequestService).findByAccountUsername(userDTO.getId());
+        verify(roomRequestService).findRequestsByAccountUsername(userDTO.getId());
 
         verifyNoMoreInteractions(roomRequestService);
     }

@@ -2,8 +2,11 @@ package com.epam.service;
 
 import com.epam.dto.RoomConfirmDTO;
 import com.epam.mappers.RoomConfirmMapper;
+import com.epam.mappers.RoomRequestMapper;
 import com.epam.model.RoomConfirm;
+import com.epam.model.RoomRequest;
 import com.epam.repository.RoomConfirmRepository;
+import com.epam.repository.RoomRequestRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,9 @@ import java.util.stream.Collectors;
 public class RoomConfirmService {
     private final RoomConfirmMapper roomConfirmMapper;
     private final RoomConfirmRepository roomConfirmRepository;
+    private final RoomRequestService roomRequestService;
+    private final RoomRequestMapper roomRequestMapper;
+    private final RoomRequestRepository roomRequestRepository;
 
     public List<RoomConfirmDTO> findByAccountUsername(long id) {
         log.debug("room confims have been found by user id {}", id);
@@ -28,6 +34,9 @@ public class RoomConfirmService {
 
     public void save(RoomConfirmDTO confirmDTO) {
         log.debug("room confims has been saved {}", confirmDTO);
+        RoomRequest request = roomRequestMapper.requestDTOToRequest(roomRequestService.findOne(confirmDTO.getRequest().getId()));
+        request.setDone(true);
+        roomRequestMapper.requestToRequestDTO(roomRequestRepository.save(request));
         roomConfirmRepository.save(roomConfirmMapper.confirmDTOToConfirm(confirmDTO));
     }
 
