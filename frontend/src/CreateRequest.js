@@ -8,7 +8,7 @@ export default class CreateRequest extends React.Component {
         super(props);
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
-        this.state = {};
+        this.state = { roomType: {name: "ord", description: "small room"}};
     }
 
     onChange(evt) {

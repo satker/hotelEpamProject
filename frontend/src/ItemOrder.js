@@ -21,7 +21,7 @@ export default class ItemOrder extends Component {
     confirmButton() {
         if( this.props.me.role === "ROLE_ADMIN") {
             return <td>
-                <Button className="btn-success">Confirm</Button>
+                <Button className="btn-success" onClick={()=>this.props.setScreen("confirm")}>Confirm</Button>
             </td>
         }
     }

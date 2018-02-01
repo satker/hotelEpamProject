@@ -1,7 +1,7 @@
 import React from "react";
 import {Table, Container, Button} from "reactstrap";
 
-const URL = "http://localhost:8080/user/_id_";
+const URL = "http://localhost:8080/admin/users/_id_";
 
 export default class UserInfoPage extends React.Component {
     constructor(props) {

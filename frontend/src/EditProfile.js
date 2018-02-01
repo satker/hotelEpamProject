@@ -19,32 +19,10 @@ export default class EditProfile extends React.Component {
 
         let body = {
             login: this.props.me().login,
+            password: this.props.me().password,
         };
         for (let key of ["firstName", "lastName"]) {
-            if (this.state[key]) {
-                body[key] = this.state[key];
-            }
-        }
-
-        let password = this.state.password;
-        if (password === "") {
-            password = null;
-        }
-
-        let confirm = this.state.confirmPassword;
-        if (confirm === "") {
-            confirm = null;
-        }
-
-        if (password) {
-            if (password === confirm) {
-                body.password = password;
-            } else {
-                /* TODO: error */
-                console.log("Password " + password + " != " + confirm);
-            }
-        } else {
-            body.password = this.props.me().password;
+            body[key] = this.state[key];
         }
 
         let resp = await fetch(URL.replace("_id_", this.props.me().id), {
@@ -56,7 +34,7 @@ export default class EditProfile extends React.Component {
             body: JSON.stringify(body),
         });
 
-        if( resp.status === 200 ) {
+        if (resp.status === 200) {
             this.props.me().firstName = body.firstName;
             this.props.me().lastName = body.lastName;
             this.props.goBack();
@@ -79,19 +57,13 @@ export default class EditProfile extends React.Component {
                         <tbody>
                         <tr>
                             <td>First name</td>
-                            <td><input type="text" name="firstName" onChange={this.onChange}/></td>
+                            <td><input type="text" name="firstName" placeholder={me.firstName}
+                                       onChange={this.onChange}/></td>
                         </tr>
                         <tr>
                             <td>Last name</td>
-                            <td><input type="text" name="lastName" onChange={this.onChange}/></td>
-                        </tr>
-                        <tr>
-                            <td>New password</td>
-                            <td><input type="password" name="password" onChange={this.onChange}/></td>
-                        </tr>
-                        <tr>
-                            <td>Confirm password</td>
-                            <td><input type="password" name="confirmPassword" onChange={this.onChange}/></td>
+                            <td><input type="text" name="lastName" placeholder={me.lastName} onChange={this.onChange}/>
+                            </td>
                         </tr>
                         </tbody>
                     </Table>

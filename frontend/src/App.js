@@ -11,6 +11,7 @@ import CreateRequest from './CreateRequest';
 import ListOfConfirmed from './ListOfConfirmed';
 import EditProfile from './EditProfile';
 import NavBar from './NavBar';
+import AdminConfirmPage from './AdminConfirmPage';
 
 class App extends Component {
     constructor(props) {
@@ -38,6 +39,7 @@ class App extends Component {
                                          user={this.getTargetUser}/>,
                 create_request: <CreateRequest me={this.getCurrentUser} goBack={this.goBack}/>,
                 edit_profile: <EditProfile me={this.getCurrentUser} goBack={this.goBack}/>,
+                confirm: <AdminConfirmPage user={this.getTargetUser} goBack={this.goBack}/>,
             },
         };
     }

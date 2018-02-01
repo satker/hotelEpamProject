@@ -8,6 +8,8 @@ export default class ItemUser extends Component {
         super(props);
 
         this.toUserPage = this.toUserPage.bind(this);
+        this.toUserRequests = this.toUserRequests.bind(this);
+        this.toUserConfirm = this.toUserConfirm.bind(this);
 
         this.state = {
             ready: false,
@@ -21,11 +23,11 @@ export default class ItemUser extends Component {
     }
 
     toUserRequests() {
-        this.props.setScreen("list_of_requests", {user: this.props.user});
+        this.props.setScreen("list_of_orders", {user: this.props.user});
     }
 
     toUserConfirm() {
-        this.props.setScreen("list_of_confirm", {user: this.props.user});
+        this.props.setScreen("list_of_confirmed", {user: this.props.user});
     }
 
     async componentDidMount() {
