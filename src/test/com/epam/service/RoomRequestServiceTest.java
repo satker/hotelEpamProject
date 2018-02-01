@@ -1,10 +1,12 @@
 package com.epam.service;
 
+import com.epam.dto.AddRoomRequestDTO;
 import com.epam.dto.RoomRequestDTO;
 import com.epam.dto.UserDTO;
 import com.epam.mappers.RoomRequestMapper;
 import com.epam.model.RoomRequest;
 import com.epam.repository.RoomRequestRepository;
+import com.epam.repository.RoomTypeRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,13 +29,15 @@ public class RoomRequestServiceTest {
     @Mock
     private RoomRequestRepository mockRoomRequestRepository;
     @Mock
+    private RoomTypeRepository mockRoomTypeRepository;
+    @Mock
     private UserService mockUserService;
 
     private RoomRequestService roomRequestService;
 
     @Before
     public void setup() {
-        roomRequestService = spy(new RoomRequestService(mockRoomRequestRepository, mockRoomRequestMapper, mockUserService));
+        roomRequestService = spy(new RoomRequestService(mockRoomRequestRepository, mockRoomRequestMapper, mockUserService,mockRoomTypeRepository));
     }
 
     @Test
@@ -94,13 +98,13 @@ public class RoomRequestServiceTest {
     @Test
     public void saveRoomRequest() {
         RoomRequest roomRequest = someRoomRequest();
-        RoomRequestDTO roomRequestDTO = someRoomRequestDTO();
+        AddRoomRequestDTO addRoomRequestDTO = someAddRoomRequestDTO();
 
-        doReturn(roomRequest).when(mockRoomRequestMapper).requestDTOToRequest(roomRequestDTO);
+        doReturn(roomRequest).when(mockRoomRequestMapper).requestDTOToRequest(addRoomRequestDTO);
 
-        roomRequestService.save(roomRequestDTO);
+        roomRequestService.save(addRoomRequestDTO);
 
-        verify(mockRoomRequestMapper).requestDTOToRequest(roomRequestDTO);
+        verify(mockRoomRequestMapper).requestDTOToRequest(addRoomRequestDTO);
         verify(mockRoomRequestRepository).save(roomRequest);
 
         verifyNoMoreInteractions(mockRoomRequestMapper, mockRoomRequestRepository);
