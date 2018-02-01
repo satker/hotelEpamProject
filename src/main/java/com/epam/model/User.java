@@ -38,13 +38,13 @@ public class User {
     private String role = "ROLE_USER";
 
     @OneToMany(mappedBy = "user")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
     @JsonIgnore
     private Set<RoomRequest> requests = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
     @JsonIgnore
     private Set<RoomConfirm> confirmRooms = new HashSet<>();

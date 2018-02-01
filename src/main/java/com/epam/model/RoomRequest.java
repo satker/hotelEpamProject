@@ -47,7 +47,7 @@ public class RoomRequest {
     private RoomType roomType;
 
     @OneToMany(mappedBy = "request")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     @Fetch(FetchMode.SELECT)
     @JsonIgnore
     private Set<RoomConfirm> confirmRooms = new HashSet<>();

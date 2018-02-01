@@ -10,6 +10,7 @@ export default class CreateRequest extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.state = {
             roomTypes: null,
+            idDone: false,
         };
     }
 
@@ -25,13 +26,26 @@ export default class CreateRequest extends React.Component {
 
     async onSubmit(evt) {
         evt.preventDefault();
+
+        let body = {
+            "capacity": "5",
+            "arrivalDate": "2018-02-03",
+            "departureDate": "2018-02-17",
+            "idDone": false,
+            "roomType": {"name": "ord", "description": "small room"}
+        };
+        /*for(let key of ["capacity", "arrivalDate", "departureDate", "idDone"]) {
+            body[key] = this.state[key];
+        }
+        body.roomType = {name:"ord", description:"small room"};*/
+
         let resp = await fetch(URL.replace("_id_", this.props.me().id), {
             method: "post",
             credentials: "include",
             headers: {
                 "content-type": "application/json",
             },
-            body: JSON.stringify(this.state),
+            body: JSON.stringify(body),
         });
         let text = await resp.text();
         console.log(text);
@@ -41,7 +55,7 @@ export default class CreateRequest extends React.Component {
     render() {
         let select = null;
         if (this.state.roomTypes) {
-            select = this.state.roomTypes.map(type => <option value={type}>{type.name}</option>);
+            select = this.state.roomTypes.map(type => <option value={type.name}>{type.name}</option>);
         }
 
         return (
