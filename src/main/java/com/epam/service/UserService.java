@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -58,7 +59,8 @@ public class UserService {
 
     public List<UserDTO> findAllUsers() {
         log.debug("all users found {}");
-        return userMapper.usersToUsersDto(userRepository.findAll());
+        return userMapper.usersToUsersDto(userRepository.findAll().
+                stream().filter(item->item.getRole().equals("ROLE_USER")).collect(Collectors.toList()));
     }
 
     public UserDTO saveUser(AddUserDTO user) {
