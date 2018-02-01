@@ -32,6 +32,7 @@ public class RoomRequestService {
         return roomRequestRepository.
                 findByUserId(id).
                 stream().
+                filter(item-> !item.isDone()).
                 map(roomRequestMapper::requestToRequestDTO).
                 collect(Collectors.toList());
     }
