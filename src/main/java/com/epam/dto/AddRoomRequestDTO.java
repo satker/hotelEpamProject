@@ -5,8 +5,7 @@ import lombok.Data;
 import java.sql.Date;
 
 @Data
-public class RoomRequestDTO {
-    private Long id;
+public class AddRoomRequestDTO {
     private byte capacity;
     private Date arrivalDate;
     private Date departureDate;

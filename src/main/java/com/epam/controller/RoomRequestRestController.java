@@ -1,5 +1,6 @@
 package com.epam.controller;
 
+import com.epam.dto.AddRoomRequestDTO;
 import com.epam.dto.RoomRequestDTO;
 import com.epam.service.RoomRequestService;
 import com.epam.service.UserService;
@@ -21,7 +22,7 @@ class RoomRequestRestController {
     private final UserService userService;
 
     @PostMapping
-    ResponseEntity add(@PathVariable long userId, @RequestBody RoomRequestDTO input) {
+    ResponseEntity add(@PathVariable long userId, @RequestBody AddRoomRequestDTO input) {
         return this.userService
                 .findUserById(userId)
                 .map(account -> {

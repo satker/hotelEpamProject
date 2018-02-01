@@ -35,7 +35,7 @@ public class User {
     @NotNull
     private String password;
     @NotNull
-    private String role = "USER";
+    private String role = "ROLE_USER";
 
     @OneToMany(mappedBy = "user")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
