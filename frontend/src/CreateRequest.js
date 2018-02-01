@@ -32,7 +32,7 @@ export default class CreateRequest extends React.Component {
             "arrivalDate": "2018-02-03",
             "departureDate": "2018-02-17",
             "idDone": false,
-            "roomType": {"name": "ord", "description": "small room"},
+            "roomType": {"id": "2", "name": "ord", "description": "small room"},
             "user": this.props.me(),
         };
         /*for(let key of ["capacity", "arrivalDate", "departureDate", "idDone"]) {

@@ -1,12 +1,25 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {Button} from "reactstrap";
 
 const URL_DELETE = "http://localhost:8080/user/_user_/orders/_id_";
+const URL_ROOMS = "http://localhost:8080/admin/appartments/_id_/rooms";
+const URL_CONFIRM = "http://localhost:8080/admin/users/_id_/confirms";
 
 export default class ItemOrder extends Component {
     constructor(props) {
         super(props);
         this.deleteOrder = this.deleteOrder.bind(this);
+        this.adminConfirm = this.adminConfirm.bind(this);
+        this.state = {rooms: null};
+    }
+
+    async componentDidMount() {
+        let resp = await fetch(URL_ROOMS.replace("_id_", this.props.order.roomType.id), {
+            credentials: "include",
+        });
+        let text = await resp.text();
+        console.log(text);
+        this.setState({rooms: JSON.parse(text)});
     }
 
     async deleteOrder() {
@@ -14,14 +27,36 @@ export default class ItemOrder extends Component {
             .replace("_user_", this.props.user.id)
             .replace("_id_", this.props.order.id);
         let resp = await fetch(url, {method: "delete"});
-        console.log( await resp.text() );
+        console.log(await resp.text());
         this.props.refresh();
     }
 
+    async adminConfirm() {
+        let room = this.state.rooms.find(room => room.number == this.state.roomNumber);
+
+        let resp = await fetch(URL_CONFIRM.replace("_id_", this.props.user.id), {
+            method: "post",
+            credentials: "include",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({
+                user: this.props.user,
+                request: this.props.order,
+                room: room,
+            }),
+        });
+    }
+
     confirmButton() {
-        if( this.props.me.role === "ROLE_ADMIN") {
+        if (this.props.me.role === "ROLE_ADMIN") {
+            let select = null;
+            if (this.state.rooms) {
+                select = this.state.rooms.map(room => <option value={room.number}>{room.number}</option>);
+            }
             return <td>
-                <Button className="btn-success" onClick={()=>this.props.setScreen("confirm")}>Confirm</Button>
+                <select onChange={(evt)=>this.setState({roomNumber: evt.target.value})}>{select}</select>
+                <Button className="btn-success" onClick={this.adminConfirm}>Confirm</Button>
             </td>
         }
     }
@@ -29,7 +64,7 @@ export default class ItemOrder extends Component {
     render() {
         let order = this.props.order;
 
-        if(order.idDone) {
+        if (order.idDone) {
             return null;
         }
 
