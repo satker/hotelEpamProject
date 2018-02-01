@@ -1,5 +1,6 @@
 package com.epam.mappers;
 
+import com.epam.dto.AddRoomRequestDTO;
 import com.epam.dto.RoomRequestDTO;
 import com.epam.model.RoomRequest;
 import org.mapstruct.Mapper;
@@ -25,4 +26,9 @@ public abstract class RoomRequestMapper {
                     expression = "java(roomTypeMapper.typeDTOToType(requestDTO.getRoomType()))")
     })
     public abstract RoomRequest requestDTOToRequest(RoomRequestDTO requestDTO);
+    @Mappings({
+            @Mapping(target = "roomType",
+                    expression = "java(roomTypeMapper.typeDTOToType(requestDTO.getRoomType()))")
+    })
+    public abstract RoomRequest requestDTOToRequest(AddRoomRequestDTO requestDTO);
 }

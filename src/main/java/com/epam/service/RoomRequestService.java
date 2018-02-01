@@ -1,5 +1,6 @@
 package com.epam.service;
 
+import com.epam.dto.AddRoomRequestDTO;
 import com.epam.dto.RoomRequestDTO;
 import com.epam.exceptions.AccessDeniedException;
 import com.epam.exceptions.RoomRequestNotFoundException;
@@ -47,7 +48,7 @@ public class RoomRequestService {
         }
     }
 
-    public void save(RoomRequestDTO request) {
+    public void save(AddRoomRequestDTO request) {
         log.debug("room request has been saved {}", request);
         roomRequestRepository.save(roomRequestMapper.requestDTOToRequest(request));
     }
