@@ -42,7 +42,7 @@ class RoomRequestRestController {
 
     @GetMapping
     List<RoomRequestDTO> readRoomRequests(@PathVariable long userId) {
-        return roomRequestService.findByAccountUsername(userId);
+        return roomRequestService.findRequestsByAccountUsername(userId);
     }
 
     @DeleteMapping(value = "/{orderId}")
