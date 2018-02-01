@@ -37,6 +37,15 @@ public class RoomRequestService {
                 collect(Collectors.toList());
     }
 
+    public List<RoomRequestDTO> findRequestsByAccountUsername(long id) {
+        log.debug("all room requests have been found by user id {}", id);
+        return roomRequestRepository.
+                findByUserId(id).
+                stream().
+                map(roomRequestMapper::requestToRequestDTO).
+                collect(Collectors.toList());
+    }
+
     public RoomRequestDTO findValidateRoom(long id, String login) {
         log.debug("room request has been found for validate user by id {}", id);
         long userId = userService.findUserByLogin(login).getId();
