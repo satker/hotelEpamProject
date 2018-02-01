@@ -1,5 +1,6 @@
 package com.epam.dto;
 
+import com.epam.model.User;
 import lombok.Data;
 
 import java.sql.Date;
@@ -11,4 +12,5 @@ public class AddRoomRequestDTO {
     private Date departureDate;
     private boolean idDone;
     private RoomTypeDTO roomType;
+    private User user;
 }

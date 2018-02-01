@@ -14,6 +14,8 @@ import java.util.List;
 public abstract class RoomRequestMapper {
     @Autowired
     RoomTypeMapper roomTypeMapper;
+    @Autowired
+    UserMapper userMapper;
 
     @Mappings({
             @Mapping(target = "roomType",
@@ -28,7 +30,9 @@ public abstract class RoomRequestMapper {
     public abstract RoomRequest requestDTOToRequest(RoomRequestDTO requestDTO);
     @Mappings({
             @Mapping(target = "roomType",
-                    expression = "java(roomTypeMapper.typeDTOToType(requestDTO.getRoomType()))")
+                    expression = "java(roomTypeMapper.typeDTOToType(requestDTO.getRoomType()))"),
+            @Mapping(target = "user",
+                    expression = "java(requestDTO.getUser())")
     })
     public abstract RoomRequest requestDTOToRequest(AddRoomRequestDTO requestDTO);
 }
