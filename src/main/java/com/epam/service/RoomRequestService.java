@@ -1,10 +1,12 @@
 package com.epam.service;
 
+import com.epam.dto.AddRoomRequestDTO;
 import com.epam.dto.RoomRequestDTO;
 import com.epam.exceptions.AccessDeniedException;
 import com.epam.exceptions.RoomRequestNotFoundException;
 import com.epam.mappers.RoomRequestMapper;
 import com.epam.repository.RoomRequestRepository;
+import com.epam.repository.RoomTypeRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,9 +24,20 @@ public class RoomRequestService {
     private final RoomRequestRepository roomRequestRepository;
     private final RoomRequestMapper roomRequestMapper;
     private final UserService userService;
+    private final RoomTypeRepository roomTypeRepository;
 
 
     public List<RoomRequestDTO> findByAccountUsername(long id) {
+        log.debug("all room requests have been found by user id {}", id);
+        return roomRequestRepository.
+                findByUserId(id).
+                stream().
+                filter(item-> !item.isDone()).
+                map(roomRequestMapper::requestToRequestDTO).
+                collect(Collectors.toList());
+    }
+
+    public List<RoomRequestDTO> findRequestsByAccountUsername(long id) {
         log.debug("all room requests have been found by user id {}", id);
         return roomRequestRepository.
                 findByUserId(id).
@@ -47,8 +60,9 @@ public class RoomRequestService {
         }
     }
 
-    public void save(RoomRequestDTO request) {
+    public void save(AddRoomRequestDTO request) {
         log.debug("room request has been saved {}", request);
+        System.out.println(roomTypeRepository.findIdByName(request.getRoomType().getName()));
         roomRequestRepository.save(roomRequestMapper.requestDTOToRequest(request));
     }
 

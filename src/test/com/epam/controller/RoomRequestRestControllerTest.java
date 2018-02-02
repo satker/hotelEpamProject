@@ -1,9 +1,12 @@
 package com.epam.controller;
 
+import com.epam.dto.AddRoomRequestDTO;
 import com.epam.dto.RoomRequestDTO;
 import com.epam.dto.UserDTO;
 import com.epam.model.User;
+import com.epam.repository.RoomTypeRepository;
 import com.epam.service.RoomRequestService;
+import com.epam.service.RoomTypeService;
 import com.epam.service.UserService;
 import com.ge.predix.web.cors.CORSFilter;
 import org.junit.Before;
@@ -38,6 +41,8 @@ public class RoomRequestRestControllerTest {
     @Mock
     private RoomRequestService roomRequestService;
     @Mock
+    private RoomTypeService mockRoomTypeService;
+    @Mock
     private UserService userService;
 
     private static final String DEFAULT_USERNAME = "user";
@@ -45,7 +50,7 @@ public class RoomRequestRestControllerTest {
     @Before
     public void init() {
         RoomRequestRestController mockRoomRequestRestController =
-                new RoomRequestRestController(roomRequestService, userService);
+                new RoomRequestRestController(roomRequestService, mockRoomTypeService, userService);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(mockRoomRequestRestController)
                 .addFilters(new CORSFilter())
@@ -81,7 +86,7 @@ public class RoomRequestRestControllerTest {
             requests.add(someRoomRequestDTO());
         }
 
-        doReturn(requests).when(roomRequestService).findByAccountUsername(userDTO.getId());
+        doReturn(requests).when(roomRequestService).findRequestsByAccountUsername(userDTO.getId());
 
         mockMvc.perform(get("/user/{userId}/orders", userDTO.getId()))
                 .andExpect(status().isOk())
@@ -90,7 +95,7 @@ public class RoomRequestRestControllerTest {
                 .andExpect(jsonPath("$.[1].idDone", is(requests.get(1).isIdDone())))
                 .andExpect(jsonPath("$.[1].arrivalDate", is(requests.get(1).getArrivalDate().toString())));
 
-        verify(roomRequestService).findByAccountUsername(userDTO.getId());
+        verify(roomRequestService).findRequestsByAccountUsername(userDTO.getId());
 
         verifyNoMoreInteractions(roomRequestService);
     }
@@ -109,7 +114,7 @@ public class RoomRequestRestControllerTest {
     @Test
     public void addRequestWithSuccess() throws Exception {
         User user = someUser();
-        RoomRequestDTO input = someRoomRequestDTO();
+        AddRoomRequestDTO input = someAddRoomRequestDTO();
 
         doNothing().when(roomRequestService).save(input);
         doReturn(Optional.of(user)).when(userService).findUserById(user.getId());

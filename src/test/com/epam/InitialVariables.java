@@ -54,6 +54,10 @@ public class InitialVariables {
         return random.nextObject(RoomConfirmDTO.class);
     }
 
+    public static AddRoomRequestDTO someAddRoomRequestDTO(){
+        return random.nextObject(AddRoomRequestDTO.class);
+    }
+
     public static Long someLong() {
         return random.nextObject(Long.class);
     }
