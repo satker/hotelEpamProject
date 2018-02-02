@@ -1,9 +1,13 @@
 package com.epam.service;
 
 import com.epam.dto.RoomConfirmDTO;
+import com.epam.dto.RoomRequestDTO;
 import com.epam.mappers.RoomConfirmMapper;
+import com.epam.mappers.RoomRequestMapper;
 import com.epam.model.RoomConfirm;
+import com.epam.model.RoomRequest;
 import com.epam.repository.RoomConfirmRepository;
+import com.epam.repository.RoomRequestRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,8 +18,7 @@ import org.mockito.junit.MockitoRule;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.InitialVariables.someRoomConfirm;
-import static com.epam.InitialVariables.someRoomConfirmDTO;
+import static com.epam.InitialVariables.*;
 import static org.mockito.Mockito.*;
 
 public class RoomConfirmServiceTest {
@@ -25,12 +28,22 @@ public class RoomConfirmServiceTest {
     private RoomConfirmMapper mockRoomConfirmMapper;
     @Mock
     private RoomConfirmRepository mockRoomConfirmRepository;
+    @Mock
+    private RoomRequestService mockRoomRequestService;
+    @Mock
+    private RoomRequestMapper mockRoomRequestMapper;
+    @Mock
+    private RoomRequestRepository mockRoomRequestRepository;
 
     private RoomConfirmService roomConfirmService;
 
     @Before
     public void setup() {
-        roomConfirmService = new RoomConfirmService(mockRoomConfirmMapper, mockRoomConfirmRepository);
+        roomConfirmService = new RoomConfirmService(mockRoomConfirmMapper,
+                mockRoomConfirmRepository,
+                mockRoomRequestService,
+                mockRoomRequestMapper,
+                mockRoomRequestRepository);
     }
 
     @Test
@@ -56,15 +69,27 @@ public class RoomConfirmServiceTest {
     public void saveRoomConfirm() {
         RoomConfirm roomConfirm = someRoomConfirm();
         RoomConfirmDTO roomConfirmDTO = someRoomConfirmDTO();
+        RoomRequestDTO roomRequestDTO = someRoomRequestDTO();
+        RoomRequest roomRequest = someRoomRequest();
 
         doReturn(roomConfirm).when(mockRoomConfirmMapper).confirmDTOToConfirm(roomConfirmDTO);
+        doReturn(roomRequestDTO).when(mockRoomRequestService).findOne(roomConfirmDTO.getRequest().getId());
+        doReturn(roomRequest).when(mockRoomRequestMapper).requestDTOToRequest(roomRequestDTO);
+        doReturn(roomRequest).when(mockRoomRequestRepository).save(roomRequest);
+        doReturn(roomRequestDTO).when(mockRoomRequestMapper).requestToRequestDTO(roomRequest);
 
         roomConfirmService.save(roomConfirmDTO);
 
         verify(mockRoomConfirmMapper).confirmDTOToConfirm(roomConfirmDTO);
         verify(mockRoomConfirmRepository).save(roomConfirm);
+        verify(mockRoomRequestService).findOne(roomConfirmDTO.getRequest().getId());
+        verify(mockRoomRequestMapper).requestDTOToRequest(roomRequestDTO);
+        verify(mockRoomRequestRepository).save(roomRequest);
+        verify(mockRoomRequestMapper).requestToRequestDTO(roomRequest);
 
-        verifyNoMoreInteractions(mockRoomConfirmRepository, mockRoomConfirmMapper);
+
+        verifyNoMoreInteractions(mockRoomConfirmRepository, mockRoomConfirmMapper,
+                mockRoomRequestService, mockRoomRequestMapper, mockRoomRequestRepository);
     }
 
     @Test
