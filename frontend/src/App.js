@@ -16,7 +16,6 @@ import AdminConfirmPage from './AdminConfirmPage';
 class App extends Component {
     constructor(props) {
         super(props);
-
         this.setScreen = this.setScreen.bind(this);
         this.getCurrentUser = this.getCurrentUser.bind(this);
         this.getTargetUser = this.getTargetUser.bind(this);

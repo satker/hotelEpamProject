@@ -28,7 +28,6 @@ export default class FormLogin extends Component {
 
     async handleSubmit(evt) {
         evt.preventDefault();
-
         let resp = await fetch(URL_LOGIN, {
             method: "POST",
             credentials: "include",
@@ -66,8 +65,9 @@ export default class FormLogin extends Component {
     handleChange(evt) {
         this.setState({[evt.target.name]: evt.target.value});
     }
-
+  
     error(str) {
         alert(str);
     }
 };
+
